@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ISO 26262 — functional safety consulting | safeautonomy</title>
+<meta name="description" content="ISO 26262 consulting: item definition, HARA and ASIL determination, functional and technical safety concepts, hardware metrics, software safety and the safety case.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2329D3D8' d='M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="index.html">
+      <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+      <span class="logo__text">safe<span>autonomy</span></span>
+    </a>
+    <button class="burger" aria-label="Toggle navigation" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+    </button>
+    <nav class="nav" aria-label="Main">
+      <div class="domain-switch" role="group" aria-label="Choose industry">
+        <a href="automotive.html" class="is-active">Automotive</a>
+        <a href="robotics.html">Robotics</a>
+      </div>
+      <a class="nav__link" href="automotive.html" data-nav="automotive.html">Home</a>
+      <div class="nav__item">
+        <a class="nav__link nav__toggle" href="services.html" data-nav="services.html service-iso-26262.html service-sotif.html service-safe-ai.html" aria-expanded="false" aria-haspopup="true">
+          Services <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 4l5 5 5-5z"/></svg>
+        </a>
+        <div class="nav__menu">
+          <a href="services.html">Services overview<small>How the standards form one hazard ecosystem</small></a>
+          <a href="service-iso-26262.html">ISO 26262<small>Functional safety of E/E systems</small></a>
+          <a href="service-sotif.html">ISO 21448 — SOTIF<small>Safety of the intended functionality</small></a>
+          <a href="service-safe-ai.html">Safe AI — ISO/PAS 8800<small>Safety assurance for machine learning</small></a>
+        </div>
+      </div>
+      <a class="nav__link" href="blog.html" data-nav="blog.html">Blog</a>
+      <a class="nav__link" href="automotive.html#about">About</a>
+      <div class="nav__cta"><a class="btn btn--primary" href="automotive.html#contact">Talk to us</a></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero hero--page">
+  <div class="hero__media">
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="assets/video/hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="arcs arcs--br" aria-hidden="true"></div>
+  <div class="container hero__inner">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="automotive.html">Home</a> <span>/</span> <a href="services.html">Services</a> <span>/</span> <span>ISO 26262</span>
+    </nav>
+    <p class="eyebrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/></svg>
+      Practice 01 · Functional safety
+    </p>
+    <h1>ISO 26262</h1>
+    <p class="hero__sub">
+      The foundation. Everything else in your safety argument rests on being able to show that
+      when the electronics fail — and they will — the vehicle does not become dangerous.
+    </p>
+  </div>
+</section>
+
+<!-- WHAT IT COVERS -->
+<section class="section">
+  <div class="container">
+    <div class="split">
+      <div class="sticky reveal">
+        <p class="eyebrow eyebrow--lime">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v2H4V4Zm0 5h16v2H4V9Zm0 5h10v2H4v-2Z"/></svg>
+          Scope
+        </p>
+        <h2>What the standard actually covers</h2>
+        <p class="lede">
+          ISO 26262 addresses hazards caused by <strong>malfunctioning behaviour</strong> of
+          electrical and electronic systems in road vehicles — and only those.
+        </p>
+        <div class="callout callout--cyan">
+          <p>
+            <strong>Boundary condition.</strong> If the hazard occurs while every component is
+            working exactly as specified, it is out of scope here and belongs in
+            <a href="service-sotif.html">SOTIF</a>. Getting this boundary right on day one saves
+            months of misfiled findings.
+          </p>
+        </div>
+      </div>
+
+      <div class="prose reveal">
+        <h3>Two families of fault</h3>
+        <p>
+          <strong>Random hardware faults</strong> occur unpredictably during the operating life of
+          a hardware element — a transistor degrades, a solder joint cracks, a cosmic ray flips a
+          bit. They cannot be designed out, only detected and controlled, and they are quantified
+          with failure rates and metrics.
+        </p>
+        <p>
+          <strong>Systematic faults</strong> are built in: a requirement was ambiguous, an interface
+          was misunderstood, a timing analysis was wrong, a compiler option was unsafe. They exist
+          in every copy of the product from the moment of manufacture, and the only defence is
+          process rigour — which is why so much of the standard is about how you work rather than
+          what you build.
+        </p>
+
+        <h3>ASIL: how much rigour, and why</h3>
+        <p>
+          Every hazardous event is classified along three axes — <strong>severity</strong> of the
+          potential harm, <strong>exposure</strong> to the operational situation, and
+          <strong>controllability</strong> by the driver or other road users. The combination yields
+          ASIL A through D, or QM where no ASIL applies.
+        </p>
+        <p>
+          The ASIL then drives everything downstream: which methods are recommended or highly
+          recommended, what hardware architectural metrics you must reach, how independent your
+          confirmation measures must be, and whether an independent safety assessment is required
+          at all. It is the single most consequential judgement in the whole lifecycle.
+        </p>
+        <div class="callout">
+          <p>
+            <strong>The automated driving twist.</strong> Controllability was written for a driver
+            who is watching the road. Above SAE Level 3 that assumption evaporates, and
+            controllability arguments that were routine in ADAS quietly stop holding. We see more
+            invalid ASIL classifications from stale controllability rationales than from any other
+            single cause.
+          </p>
+        </div>
+
+        <h3>From safety goals to a safety case</h3>
+        <p>
+          The lifecycle moves from item definition and HARA to safety goals, then to a
+          <strong>functional safety concept</strong> that says what must happen to keep each goal
+          intact, then to a <strong>technical safety concept</strong> that allocates it to hardware
+          and software with fault tolerant time intervals and safe states. Hardware development
+          adds quantitative evidence — FMEDA, SPFM, LFM, PMHF — and software development adds
+          architecture, unit design, and verification against the ASIL-appropriate method table.
+        </p>
+        <p>
+          Around all of it sits safety management: the safety plan, the development interface
+          agreement with each supplier, tool qualification, and the confirmation measures —
+          reviews, audit and assessment — that make the argument independent rather than
+          self-declared. The output is the <strong>safety case</strong>: the reasoned argument,
+          supported by the work products, that the item is acceptably safe.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6V2Zm8 1.5V8h4.5L14 3.5ZM8 12h8v1.6H8V12Zm0 4h8v1.6H8V16Z"/></svg>
+          Deliverables
+        </p>
+        <h2>What we deliver</h2>
+        <p class="lede">
+          Work products, reviewed and traceable — written to survive an independent assessment
+          rather than to fill a template.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="automotive.html#contact">Discuss your item</a>
+        </div>
+      </div>
+
+      <ul class="deliver reveal">
+        <li><span>01</span><div><strong>Item definition &amp; boundary.</strong> Function, interfaces, assumptions and the operational situations that matter — the document every later dispute traces back to.</div></li>
+        <li><span>02</span><div><strong>HARA &amp; ASIL determination.</strong> Facilitated hazard analysis with a defensible S/E/C rationale, including controllability arguments that hold above Level 2.</div></li>
+        <li><span>03</span><div><strong>Functional safety concept.</strong> Safety goals, safe states, fault tolerant time intervals, warning and degradation strategy, ASIL decomposition where it genuinely helps.</div></li>
+        <li><span>04</span><div><strong>Technical safety concept.</strong> Allocation to hardware and software, safety mechanisms, diagnostic coverage targets and freedom from interference arguments.</div></li>
+        <li><span>05</span><div><strong>Hardware safety analysis.</strong> FMEDA, fault tree analysis, dependent failure analysis, and the SPFM / LFM / PMHF evidence against the target ASIL.</div></li>
+        <li><span>06</span><div><strong>Software safety.</strong> Software safety requirements, architectural measures, method selection per ASIL, and the verification argument behind the test coverage numbers.</div></li>
+        <li><span>07</span><div><strong>Safety management.</strong> Safety plan, DIA with suppliers, impact analysis for changes, tool classification and qualification, and confirmation measure planning.</div></li>
+        <li><span>08</span><div><strong>Safety case &amp; assessment support.</strong> A structured argument, a gap-closed work product set, and someone in the room who has been on the other side of the table.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- WHEN YOU NEED US -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v5.3l4 2.4-.9 1.5-5.1-3V7h2Z"/></svg>
+        Signals
+      </p>
+      <h2>You probably need this if…</h2>
+    </div>
+    <div class="grid grid-2">
+      <div class="frame reveal">
+        <div class="card">
+          <ul class="checks checks--cyan">
+            <li>Your ASILs were set years ago and the function has grown since, but nobody has re-run the HARA.</li>
+            <li>Controllability is doing a lot of load-bearing work in your classification and the driver is no longer supervising.</li>
+            <li>Your hardware metrics are calculated but the assumptions behind the failure rates were never written down.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="frame reveal" data-delay="90">
+        <div class="card">
+          <ul class="checks checks--cyan">
+            <li>You have supplier components with a safety manual nobody has checked their assumptions of use against.</li>
+            <li>An independent assessment is scheduled and the safety case is currently a folder of documents rather than an argument.</li>
+            <li>Your software passes its coverage targets but no one can say which safety requirement each test discharges.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECTS TO -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7h-4V5h4a5 5 0 0 1 0 10h-4v-2h4a3 3 0 0 0 0-6Zm-6 8H7a3 3 0 0 1 0-6h4V7H7a5 5 0 0 0 0 10h4v-2Zm-3-5h8v2H8v-2Z"/></svg>
+        Connections
+      </p>
+      <h2>How this connects to the other two</h2>
+      <p class="lede">
+        ISO 26262 is where the safety goals are born. Both other branches inherit them —
+        which is exactly why the three cannot be run as independent projects.
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+      <a class="frame reveal" href="service-sotif.html">
+        <article class="card">
+          <span class="tag tag--lime">Next branch</span>
+          <h3 style="margin-top:1.1rem">→ SOTIF takes the same safety goals and removes the faults</h3>
+          <p>
+            SOTIF asks what happens to those identical safety goals when nothing is broken. Same
+            hazards, same goals, entirely different causal chain — and a different set of
+            countermeasures. If your SOTIF analysis has its own separate hazard list, something
+            has already gone wrong.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore SOTIF
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+
+      <a class="frame reveal" href="service-safe-ai.html" data-delay="90">
+        <article class="card">
+          <span class="tag">Related branch</span>
+          <h3 style="margin-top:1.1rem">→ ISO/PAS 8800 handles what the V-model cannot</h3>
+          <p>
+            Part 6 of ISO 26262 assumes software you can specify, review and unit-test. A trained
+            network has no unit to test in that sense. ISO/PAS 8800 supplies the equivalent
+            rigour for learned components — while the inference hardware they run on stays firmly
+            inside ISO 26262.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore Safe AI
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+    </div>
+
+    <div class="btn-row reveal" style="justify-content:center">
+      <a class="btn btn--ghost" href="services.html">See the full hazard ecosystem</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band cut reveal">
+      <h2>Bring us in before the assessor does</h2>
+      <p class="lede center">
+        An independent review three months early costs a fraction of one three weeks late.
+      </p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--primary" href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a>
+        <a class="btn btn--ghost" href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="index.html">
+          <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+          <span class="logo__text">safe<span>autonomy</span></span>
+        </a>
+        <p class="footer__blurb">
+          Bridging ISO 26262, ISO 21448 and ISO/PAS 8800 into one defensible safety argument
+          for automated driving.
+        </p>
+        <p style="margin-top:1rem"><a href="robotics.html" style="font-family:var(--font-head);font-weight:700;font-size:.85rem;color:var(--muted)">Looking for robotics? →</a></p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Overview</a></li>
+          <li><a href="service-iso-26262.html">ISO 26262</a></li>
+          <li><a href="service-sotif.html">SOTIF — ISO 21448</a></li>
+          <li><a href="service-safe-ai.html">Safe AI — ISO/PAS 8800</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="automotive.html#about">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="automotive.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a></li>
+          <li><a href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a></li>
+          <li><a href="https://www.linkedin.com/in/dr-simon-saim-perveen-5b797918a/">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; <span data-year>2026</span> safeautonomy. All rights reserved.</p>
+      <p>ISO 26262 · ISO 21448 · ISO/PAS 8800 · AFGBV</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

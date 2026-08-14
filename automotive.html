@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>safeautonomy — ISO 26262, SOTIF &amp; Safe AI consulting</title>
+<meta name="description" content="safeautonomy bridges ISO 26262, ISO 21448 (SOTIF) and ISO/PAS 8800 into one defensible safety argument for automated driving — from HARA to approval under AFGBV and UNECE regulation.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2329D3D8' d='M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="index.html">
+      <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+      <span class="logo__text">safe<span>autonomy</span></span>
+    </a>
+
+    <button class="burger" aria-label="Toggle navigation" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+    </button>
+
+    <nav class="nav" aria-label="Main">
+      <div class="domain-switch" role="group" aria-label="Choose industry">
+        <a href="automotive.html" class="is-active">Automotive</a>
+        <a href="robotics.html">Robotics</a>
+      </div>
+
+      <a class="nav__link" href="automotive.html" data-nav="automotive.html">Home</a>
+
+      <div class="nav__item">
+        <a class="nav__link nav__toggle" href="services.html" data-nav="services.html service-iso-26262.html service-sotif.html service-safe-ai.html" aria-expanded="false" aria-haspopup="true">
+          Services
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 4l5 5 5-5z"/></svg>
+        </a>
+        <div class="nav__menu">
+          <a href="services.html">Services overview<small>How the standards form one hazard ecosystem</small></a>
+          <a href="service-iso-26262.html">ISO 26262<small>Functional safety of E/E systems</small></a>
+          <a href="service-sotif.html">ISO 21448 — SOTIF<small>Safety of the intended functionality</small></a>
+          <a href="service-safe-ai.html">Safe AI — ISO/PAS 8800<small>Safety assurance for machine learning</small></a>
+        </div>
+      </div>
+
+      <a class="nav__link" href="blog.html" data-nav="blog.html">Blog</a>
+      <a class="nav__link" href="#about">About</a>
+      <div class="nav__cta"><a class="btn btn--primary" href="#contact">Talk to us</a></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero__media">
+    <video class="hero__video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+      <source src="assets/video/hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="arcs arcs--tl" aria-hidden="true"></div>
+
+  <div class="container hero__inner">
+    <p class="eyebrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Z"/></svg>
+      Functional safety · SOTIF · Safe AI
+    </p>
+
+    <h1>Three standards.<em>One safety argument.</em></h1>
+
+    <p class="hero__sub">
+      We bridge <strong>ISO 26262</strong>, <strong>ISO 21448 (SOTIF)</strong> and <strong>ISO/PAS 8800</strong>
+      into a single, traceable safety case — so your automated driving function is not only
+      engineered safely, but demonstrably approvable.
+    </p>
+
+    <div class="btn-row">
+      <a class="btn btn--primary" href="services.html">
+        Explore our services
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+      </a>
+      <a class="btn btn--ghost" href="#contact">Book a discovery call</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STANDARDS TICKER ============ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span class="ticker__item">ISO 26262</span>
+    <span class="ticker__item">ISO 21448 SOTIF</span>
+    <span class="ticker__item">ISO/PAS 8800</span>
+    <span class="ticker__item">AFGBV / StVG §1d–1l</span>
+    <span class="ticker__item">UNECE R155 · R156 · R157</span>
+    <span class="ticker__item">ISO/SAE 21434</span>
+    <span class="ticker__item">EU AI Act</span>
+    <span class="ticker__item">UL 4600</span>
+    <!-- duplicate for a seamless loop -->
+    <span class="ticker__item">ISO 26262</span>
+    <span class="ticker__item">ISO 21448 SOTIF</span>
+    <span class="ticker__item">ISO/PAS 8800</span>
+    <span class="ticker__item">AFGBV / StVG §1d–1l</span>
+    <span class="ticker__item">UNECE R155 · R156 · R157</span>
+    <span class="ticker__item">ISO/SAE 21434</span>
+    <span class="ticker__item">EU AI Act</span>
+    <span class="ticker__item">UL 4600</span>
+  </div>
+</div>
+
+<!-- ============ THE PROBLEM ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 2 20h20L12 2Zm0 5 6.2 11H5.8L12 7Z"/></svg>
+        The problem
+      </p>
+      <h2>Compliance in silos leaves gaps.<br>Accidents live in those gaps.</h2>
+      <p class="lede">
+        Each of the three standards is complete on its own terms — and blind outside them.
+        Treat them as three separate audits and you will pass all three while the residual
+        risk sits in the seams between them.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="frame reveal">
+        <article class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/></svg>
+          </div>
+          <h3>The system fails</h3>
+          <p>
+            A resistor drifts, a bit flips in RAM, a task overruns its deadline. Classic
+            <strong>malfunctioning behaviour</strong> of an E/E system — random hardware faults
+            and systematic faults in hardware and software.
+          </p>
+          <div class="card__foot"><span class="tag">Covered by ISO 26262</span></div>
+        </article>
+      </div>
+
+      <div class="frame reveal" data-delay="90">
+        <article class="card">
+          <div class="card__icon card__icon--lime">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5c-5 0-8.6 4.2-9.5 7.5.9 3.3 4.5 7.5 9.5 7.5s8.6-4.2 9.5-7.5c-.9-3.3-4.5-7.5-9.5-7.5Zm0 12.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-2.2a2.8 2.8 0 1 0 0-5.6 2.8 2.8 0 0 0 0 5.6Z"/></svg>
+          </div>
+          <h3>The system doesn't fail — it just isn't good enough</h3>
+          <p>
+            Every component works exactly as specified, and the vehicle still behaves unsafely:
+            low sun blinds the camera, radar loses a stationary object, the specification never
+            anticipated the scenario. <strong>Functional insufficiency</strong>, not fault.
+          </p>
+          <div class="card__foot"><span class="tag tag--lime">Covered by ISO 21448</span></div>
+        </article>
+      </div>
+
+      <div class="frame reveal" data-delay="180">
+        <article class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6v2.2a7 7 0 0 1 4.8 4.8H22v6h-2.2A7 7 0 0 1 15 20.8V23H9v-2.2a7 7 0 0 1-4.8-4.8H2v-6h2.2A7 7 0 0 1 9 5.2V3Zm3 5.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z"/></svg>
+          </div>
+          <h3>The system learned the wrong thing</h3>
+          <p>
+            The insufficiency is not in the code — it is in the <strong>data and the model</strong>.
+            Distributional shift, an unrepresentative training set, brittle generalisation,
+            and a decision boundary nobody can inspect line by line.
+          </p>
+          <div class="card__foot"><span class="tag">Covered by ISO/PAS 8800</span></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:2.75rem">
+      <p>
+        <strong>The seam is the risk.</strong> A perception stack can meet every ASIL D hardware
+        architectural metric and still fail to classify a stationary vehicle at closing speed.
+        ISO 26262 records a pass. SOTIF records a hazard. ISO/PAS 8800 explains why the model
+        was always going to miss it. Only an argument that spans all three can close the case.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE BRIDGE ============ -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head center reveal">
+      <p class="eyebrow">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h16v2H4zm2-6h2v5H6zm10 0h2v5h-2zM6 14h2v5H6zm10 0h2v5h-2z"/></svg>
+        What we do
+      </p>
+      <h2>We bridge three standards into one safety argument</h2>
+      <p class="lede">
+        One hazard. Three families of cause. One safety case that traces every hazard through
+        every applicable framework to evidence — and states the residual risk in language an
+        assessor and an approval authority will accept.
+      </p>
+    </div>
+
+    <!-- hazard ecosystem diagram -->
+    <div class="eco reveal">
+      <div class="eco__cap eco__cap--hazard">
+        Vehicle-level hazard
+        <small>Identified once, in a single HARA — unwanted behaviour that can lead to harm</small>
+      </div>
+
+      <div class="eco__flow" aria-hidden="true">
+        <div class="eco__arrow eco__arrow--down"><svg viewBox="0 0 12 12"><path d="M6 11 1 5h10z"/></svg></div>
+        <div class="eco__arrow eco__arrow--down"><svg viewBox="0 0 12 12"><path d="M6 11 1 5h10z"/></svg></div>
+        <div class="eco__arrow eco__arrow--down"><svg viewBox="0 0 12 12"><path d="M6 11 1 5h10z"/></svg></div>
+      </div>
+
+      <div class="eco__cols">
+        <div class="eco__col">
+          <span class="eco__std">ISO 26262</span>
+          <h4>Cause: malfunction</h4>
+          <p>
+            The item is faulted. Answered with ASIL classification, safety mechanisms,
+            diagnostic coverage and hardware metrics.
+          </p>
+        </div>
+        <div class="eco__col">
+          <span class="eco__std">ISO 21448 · SOTIF</span>
+          <h4>Cause: insufficiency</h4>
+          <p>
+            The item is fault-free but not capable enough. Answered with triggering conditions,
+            scenario coverage and acceptance criteria.
+          </p>
+        </div>
+        <div class="eco__col">
+          <span class="eco__std">ISO/PAS 8800</span>
+          <h4>Cause: the AI itself</h4>
+          <p>
+            The insufficiency originates in data, training or generalisation. Answered with an
+            AI safety lifecycle and model-level evidence.
+          </p>
+        </div>
+      </div>
+
+      <div class="eco__flow" aria-hidden="true">
+        <div class="eco__arrow"><svg viewBox="0 0 12 12"><path d="M6 1 1 7h10z"/></svg></div>
+        <div class="eco__arrow"><svg viewBox="0 0 12 12"><path d="M6 1 1 7h10z"/></svg></div>
+        <div class="eco__arrow"><svg viewBox="0 0 12 12"><path d="M6 1 1 7h10z"/></svg></div>
+      </div>
+
+      <div class="eco__cap eco__cap--case">
+        One integrated safety case
+        <small>Traceable to approval under AFGBV, UNECE R157/R155 and the EU AI Act</small>
+      </div>
+    </div>
+
+    <div class="btn-row reveal" style="justify-content:center">
+      <a class="btn btn--cyan" href="services.html">
+        See how the standards interlock
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8v8H3V3Zm10 0h8v8h-8V3ZM3 13h8v8H3v-8Zm10 0h8v8h-8v-8Z"/></svg>
+        Services
+      </p>
+      <h2>Three practices, deliberately not separate</h2>
+      <p class="lede">
+        Engage one where you have a specific gap, or all three where you need a complete
+        argument. Either way the work product is designed to slot into the same safety case.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+      <a class="frame reveal" href="service-iso-26262.html">
+        <article class="card">
+          <p class="card__num">01 / Functional safety</p>
+          <h3>ISO 26262</h3>
+          <p>
+            Item definition, HARA and ASIL determination, functional and technical safety concepts,
+            hardware metrics, software safety requirements, confirmation measures and the safety case.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore ISO 26262
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+
+      <a class="frame reveal" href="service-sotif.html" data-delay="90">
+        <article class="card">
+          <p class="card__num">02 / Intended functionality</p>
+          <h3>SOTIF — ISO 21448</h3>
+          <p>
+            Triggering condition analysis, the known/unknown &times; safe/unsafe scenario space,
+            quantitative acceptance criteria, scenario-based V&amp;V strategy and field monitoring.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore SOTIF
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+
+      <a class="frame reveal" href="service-safe-ai.html" data-delay="180">
+        <article class="card">
+          <p class="card__num">03 / Artificial intelligence</p>
+          <h3>Safe AI — ISO/PAS 8800</h3>
+          <p>
+            AI safety lifecycle, dataset specification and coverage, model-level safety requirements,
+            robustness and out-of-distribution evidence, runtime monitoring and the AI safety argument.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore Safe AI
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW WE WORK ============ -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v5.3l4 2.4-.9 1.5-5.1-3V7h2Z"/></svg>
+          Engagement
+        </p>
+        <h2>How we work</h2>
+        <p class="lede">
+          Consulting that produces artefacts, not slideware. Every engagement ends with something
+          you can hand to an assessor, a customer or the KBA.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--ghost" href="#contact">Discuss a project</a>
+        </div>
+      </div>
+
+      <div class="steps grid-2 reveal">
+        <div class="step">
+          <h4>Assess</h4>
+          <p>
+            Gap and readiness assessment against all applicable frameworks at once. You get a
+            prioritised finding list mapped to clauses, not a generic maturity score.
+          </p>
+        </div>
+        <div class="step">
+          <h4>Architect</h4>
+          <p>
+            Safety goals, decomposition and the allocation of requirements across functional safety,
+            SOTIF and AI evidence — so the architecture carries the argument rather than fighting it.
+          </p>
+        </div>
+        <div class="step">
+          <h4>Evidence</h4>
+          <p>
+            A V&amp;V strategy that says what each test proves and what residual claim survives it:
+            scenario catalogues, coverage rationale, dataset specifications, metrics and thresholds.
+          </p>
+        </div>
+        <div class="step">
+          <h4>Argue</h4>
+          <p>
+            A structured safety case — goals, strategies, context, evidence — with a defensible
+            residual risk statement, plus support through independent assessment and approval.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REGULATORY ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 6v6c0 5 3.8 9.4 9 10 5.2-.6 9-5 9-10V6l-9-4Z"/></svg>
+        Regulatory readiness
+      </p>
+      <h2>The standards are the means. Approval is the end.</h2>
+      <p class="lede">
+        Standards conformance is necessary but not sufficient. We shape the technical evidence
+        so it maps directly onto the regulatory instrument you actually have to satisfy.
+      </p>
+    </div>
+
+    <div class="grid grid-4">
+      <div class="frame reveal">
+        <article class="card">
+          <h4>AFGBV &amp; StVG §1d–1l</h4>
+          <p>
+            Germany's autonomous vehicle approval and operation ordinance for SAE Level 4 in a
+            defined operational area: technical supervision, risk-minimal state, data recording
+            and the KBA dossier.
+          </p>
+        </article>
+      </div>
+      <div class="frame reveal" data-delay="70">
+        <article class="card">
+          <h4>UNECE R157 &amp; R171</h4>
+          <p>
+            Type approval for automated lane keeping and driver control assistance systems,
+            including the audit and reporting scheme and the scenario catalogue expectations.
+          </p>
+        </article>
+      </div>
+      <div class="frame reveal" data-delay="140">
+        <article class="card">
+          <h4>R155 / R156 &amp; ISO&nbsp;21434</h4>
+          <p>
+            Cybersecurity and software update management systems — the security case that a
+            modern safety case can no longer be written without.
+          </p>
+        </article>
+      </div>
+      <div class="frame reveal" data-delay="210">
+        <article class="card">
+          <h4>EU AI Act</h4>
+          <p>
+            Where safety-relevant AI meets horizontal AI regulation: risk management, data
+            governance, logging, transparency and human oversight obligations.
+          </p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section section--alt" id="about">
+  <div class="container">
+    <div class="founder reveal">
+      <div class="founder__frame">
+        <img class="founder__photo" src="assets/img/saim.jpg" alt="Dr. Saim Simon Perveen">
+      </div>
+
+      <div>
+        <p class="eyebrow">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Z"/></svg>
+          About
+        </p>
+        <h2>Dr. Saim Simon Perveen</h2>
+        <p style="color:var(--lime);font-family:var(--font-head);font-weight:700;margin-top:-.35rem">
+          Build your trustworthy system with me
+        </p>
+        <p class="lede" style="margin-top:1.1rem">
+          safeautonomy is an independent consultancy for the safety of automated and
+          AI-driven vehicle functions. We work with OEMs, Tier&nbsp;1 suppliers and
+          automated-driving developers at exactly the point where functional safety,
+          SOTIF and machine learning stop being separate disciplines.
+        </p>
+        <ul class="checks" style="margin-top:1.6rem">
+          <li>Safety concepts and safety cases for perception, planning and control functions</li>
+          <li>Independent review and assessment readiness before it costs you a release slot</li>
+          <li>Training and coaching that leaves your team able to run the process without us</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="locations reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 6v6c0 5 3.8 9.4 9 10 5.2-.6 9-5 9-10V6l-9-4Z"/></svg>
+        Where we work
+      </p>
+      <h3>Luxembourg, with reach into Germany's automotive corridor</h3>
+      <p class="lede">
+        Based centrally in Luxembourg and regularly on site in Wolfsburg — home to Volkswagen
+        and a dense cluster of OEM and Tier&nbsp;1 engineering teams — close enough to sit with
+        your team, not just review documents from a distance.
+      </p>
+
+      <div class="grid grid-2" style="margin-top:2rem">
+        <div class="frame location-card">
+          <div>
+            <div class="location-card__map">
+              <iframe
+                src="https://www.google.com/maps?q=Luxembourg&output=embed"
+                title="Map showing Luxembourg"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="location-card__body">
+              <span class="tag tag--lime">Home base</span>
+              <h4>Luxembourg</h4>
+              <p>Working across the EU from the Grand Duchy.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="frame location-card">
+          <div>
+            <div class="location-card__map">
+              <iframe
+                src="https://www.google.com/maps?q=Wolfsburg,Germany&output=embed"
+                title="Map showing Wolfsburg, Germany"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="location-card__body">
+              <span class="tag">On site</span>
+              <h4>Wolfsburg, Germany</h4>
+              <p>Regular presence in Lower Saxony's automotive engineering hub.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="cta-band cut reveal">
+      <p class="eyebrow eyebrow--lime" style="justify-content:center">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Z"/></svg>
+        Get in touch
+      </p>
+      <h2>Let's find out where your safety argument breaks</h2>
+      <p class="lede center">
+        A 30-minute call is usually enough to tell whether your gap is in functional safety,
+        in SOTIF, in the AI evidence — or in the traceability between them.
+      </p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--primary" href="https://wa.me/352661553282">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6s.6-1.8.8-2.1c.2-.2.5-.3.6-.3h.5c.1 0 .3 0 .5.4l.7 1.7c.1.1.1.3 0 .5l-.3.4-.3.4c-.1.1-.2.3 0 .5l.9 1.3c.6.7 1.1 1 1.6 1.2.2.1.3.1.5-.1l.7-.8c.1-.2.3-.2.5-.1l1.6.8c.2.1.4.2.4.3.1.1.1.5-.1 1Z"/></svg>
+          WhatsApp +352 661 553 282
+        </a>
+        <a class="btn btn--ghost" href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a>
+      </div>
+    </div>
+
+    <div class="contact-grid reveal" style="margin-top:1.15rem">
+      <div class="frame">
+        <div class="card contact-card">
+          <p class="contact-card__l">Phone / WhatsApp</p>
+          <a class="contact-card__v" href="tel:+352661553282">+352 661 553 282</a>
+        </div>
+      </div>
+      <div class="frame">
+        <div class="card contact-card">
+          <p class="contact-card__l">Email</p>
+          <a class="contact-card__v" href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a>
+        </div>
+      </div>
+      <div class="frame">
+        <div class="card contact-card">
+          <p class="contact-card__l">Based in</p>
+          <p class="contact-card__v">Luxembourg — working across the EU</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="index.html">
+          <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+          <span class="logo__text">safe<span>autonomy</span></span>
+        </a>
+        <p class="footer__blurb">
+          Bridging ISO 26262, ISO 21448 and ISO/PAS 8800 into one defensible safety argument
+          for automated driving.
+        </p>
+        <p style="margin-top:1rem"><a href="robotics.html" style="font-family:var(--font-head);font-weight:700;font-size:.85rem;color:var(--muted)">Looking for robotics? →</a></p>
+      </div>
+
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Overview</a></li>
+          <li><a href="service-iso-26262.html">ISO 26262</a></li>
+          <li><a href="service-sotif.html">SOTIF — ISO 21448</a></li>
+          <li><a href="service-safe-ai.html">Safe AI — ISO/PAS 8800</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="automotive.html#about">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="automotive.html#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a></li>
+          <li><a href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a></li>
+          <li><a href="https://www.linkedin.com/in/dr-simon-saim-perveen-5b797918a/">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; <span data-year>2026</span> safeautonomy. All rights reserved.</p>
+      <p>ISO 26262 · ISO 21448 · ISO/PAS 8800 · AFGBV</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

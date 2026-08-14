@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>safeautonomy — safety engineering for robotics</title>
+<meta name="description" content="safeautonomy bridges IEC 61508, the emerging AI-safety standards (ISO/IEC TR 5469, TS 22440, TS 25223) and UL's autonomy certification standards (UL 4600, UL 3115) into one safety argument for AGVs, mobile platforms, robot arms and humanoids.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2329D3D8' d='M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+  /* robotics hero — violet-tinted glow instead of the automotive cyan, no video */
+  .hero--robotics .hero__media::after {
+    background:
+      linear-gradient(90deg, rgba(8,15,22,.9) 0%, rgba(8,15,22,.72) 45%, rgba(8,15,22,.38) 100%),
+      linear-gradient(0deg, var(--bg) 2%, rgba(8,15,22,.2) 45%, rgba(8,15,22,.7) 100%),
+      radial-gradient(ellipse 65% 60% at 78% 30%, rgba(124,107,240,.20), transparent 70%),
+      radial-gradient(ellipse 45% 45% at 15% 85%, rgba(41,211,216,.10), transparent 70%);
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="index.html">
+      <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+      <span class="logo__text">safe<span>autonomy</span></span>
+    </a>
+
+    <button class="burger" aria-label="Toggle navigation" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+    </button>
+
+    <nav class="nav" aria-label="Main">
+      <div class="domain-switch" role="group" aria-label="Choose industry">
+        <a href="automotive.html">Automotive</a>
+        <a href="robotics.html" class="is-active">Robotics</a>
+      </div>
+
+      <a class="nav__link" href="robotics.html" data-nav="robotics.html">Home</a>
+
+      <div class="nav__item">
+        <a class="nav__link nav__toggle" href="robotics-services.html" data-nav="robotics-services.html robotics-service-functional-safety.html robotics-service-safe-ai.html robotics-service-autonomy-certification.html" aria-expanded="false" aria-haspopup="true">
+          Services
+          <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 4l5 5 5-5z"/></svg>
+        </a>
+        <div class="nav__menu">
+          <a href="robotics-services.html">Services overview<small>How the standards form one hazard ecosystem</small></a>
+          <a href="robotics-service-functional-safety.html">Functional safety<small>IEC 61508 for E/E/PE safety-related systems</small></a>
+          <a href="robotics-service-safe-ai.html">Safe AI<small>ISO/IEC TR 5469 · TS 22440 · TS 25223</small></a>
+          <a href="robotics-service-autonomy-certification.html">Autonomy certification<small>UL 4600 · UL 3115</small></a>
+        </div>
+      </div>
+
+      <a class="nav__link" href="robotics-blog.html" data-nav="robotics-blog.html">Blog</a>
+      <a class="nav__link" href="#about">About</a>
+      <div class="nav__cta"><a class="btn btn--primary" href="#contact">Talk to us</a></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero hero--robotics">
+  <div class="hero__media">
+    <video class="hero__video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+      <source src="assets/video/robotics-hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="arcs arcs--tl" aria-hidden="true"></div>
+
+  <div class="container hero__inner">
+    <p class="eyebrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Z"/></svg>
+      Functional safety · AI safety · Autonomy certification
+    </p>
+
+    <h1>Six standards.<em>One safety framework.</em></h1>
+
+    <p class="hero__sub">
+      We bridge <strong>IEC 61508</strong>, the emerging AI-safety family
+      (<strong>ISO/IEC TR 5469 · TS 22440 · TS 25223</strong>) and UL's certification
+      standards (<strong>UL 4600 · UL 3115</strong>) into a single, evidence-based safety
+      case — for AGVs, mobile platforms, robot arms and humanoids alike.
+    </p>
+
+    <div class="btn-row">
+      <a class="btn btn--primary" href="robotics-services.html">
+        Explore our services
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+      </a>
+      <a class="btn btn--ghost" href="#contact">Book a discovery call</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STANDARDS TICKER ============ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span class="ticker__item">IEC 61508</span>
+    <span class="ticker__item">ISO/IEC TR 5469</span>
+    <span class="ticker__item">ISO/IEC TS 22440</span>
+    <span class="ticker__item">ISO/IEC TS 25223</span>
+    <span class="ticker__item">UL 4600</span>
+    <span class="ticker__item">UL 3115</span>
+    <span class="ticker__item">EU Machinery Reg. 2023/1230</span>
+    <span class="ticker__item">ISO 3691-4</span>
+    <span class="ticker__item">ANSI/RIA R15.08</span>
+    <!-- duplicate for a seamless loop -->
+    <span class="ticker__item">IEC 61508</span>
+    <span class="ticker__item">ISO/IEC TR 5469</span>
+    <span class="ticker__item">ISO/IEC TS 22440</span>
+    <span class="ticker__item">ISO/IEC TS 25223</span>
+    <span class="ticker__item">UL 4600</span>
+    <span class="ticker__item">UL 3115</span>
+    <span class="ticker__item">EU Machinery Reg. 2023/1230</span>
+    <span class="ticker__item">ISO 3691-4</span>
+    <span class="ticker__item">ANSI/RIA R15.08</span>
+  </div>
+</div>
+
+<!-- ============ THE PROBLEM ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 2 20h20L12 2Zm0 5 6.2 11H5.8L12 7Z"/></svg>
+        The problem
+      </p>
+      <h2>A robot can be safe in the lab and unsafe everywhere else.</h2>
+      <p class="lede">
+        Functional safety, AI trustworthiness and certifiability are three different failure
+        modes. A platform can clear one and quietly fail the other two — and the gap only
+        shows up once it's deployed.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="frame reveal">
+        <article class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5Z"/></svg>
+          </div>
+          <h3>The robot fails</h3>
+          <p>
+            A motor controller drifts out of calibration, a bus message is corrupted, a
+            watchdog misses its deadline. Classic <strong>malfunctioning behaviour</strong> of
+            an E/E/PE safety-related system — random hardware faults and systematic faults in
+            hardware and software.
+          </p>
+          <div class="card__foot"><span class="tag">Covered by IEC 61508</span></div>
+        </article>
+      </div>
+
+      <div class="frame reveal" data-delay="90">
+        <article class="card">
+          <div class="card__icon card__icon--lime">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6v2.2a7 7 0 0 1 4.8 4.8H22v6h-2.2A7 7 0 0 1 15 20.8V23H9v-2.2a7 7 0 0 1-4.8-4.8H2v-6h2.2A7 7 0 0 1 9 5.2V3Zm3 5.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z"/></svg>
+          </div>
+          <h3>The AI can't be trusted</h3>
+          <p>
+            Every actuator is healthy and every joint is within tolerance, and the arm still
+            grips the wrong part or the AMR still misreads the aisle — because the model's
+            confidence was never calibrated to the situation it met. Insufficiency in
+            perception or decision-making, not a fault.
+          </p>
+          <div class="card__foot"><span class="tag tag--lime">Covered by TR 5469 · TS 22440 · TS 25223</span></div>
+        </article>
+      </div>
+
+      <div class="frame reveal" data-delay="180">
+        <article class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 6v6c0 5 3.8 9.4 9 10 5.2-.6 9-5 9-10V6l-9-4Z"/></svg>
+          </div>
+          <h3>Nobody can prove it's safe enough</h3>
+          <p>
+            The robot works in the lab and in every demo you've run. A customer, insurer or
+            certification body needs an <strong>argument, not a demo reel</strong> — evidence
+            of what was tested, what wasn't, and why the residual risk is acceptable.
+          </p>
+          <div class="card__foot"><span class="tag">Covered by UL 4600 · UL 3115</span></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:2.75rem">
+      <p>
+        <strong>The seam is the risk.</strong> A mobile platform can pass every IEC 61508
+        safety function test and still misclassify a person as a pallet. It can have a
+        well-behaved perception model and still have no assurance case a customer's insurer
+        will accept. Only an argument that spans all three can close the case.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE BRIDGE ============ -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head center reveal">
+      <p class="eyebrow">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h16v2H4zm2-6h2v5H6zm10 0h2v5h-2zM6 14h2v5H6zm10 0h2v5h-2z"/></svg>
+        What we do
+      </p>
+      <h2>We bridge six standards into one safety argument</h2>
+      <p class="lede">
+        One hazard. Three families of cause. One safety case that traces every hazard through
+        every applicable framework to evidence — whatever the robot is built to do.
+      </p>
+    </div>
+
+    <div class="eco reveal">
+      <div class="eco__cap eco__cap--hazard">
+        Robot-level hazard
+        <small>Identified once, in a single hazard and risk analysis — unwanted behaviour that can lead to harm, whether the robot drives, reaches or walks</small>
+      </div>
+
+      <div class="eco__flow" aria-hidden="true">
+        <div class="eco__arrow eco__arrow--down"><svg viewBox="0 0 12 12"><path d="M6 11 1 5h10z"/></svg></div>
+        <div class="eco__arrow eco__arrow--down"><svg viewBox="0 0 12 12"><path d="M6 11 1 5h10z"/></svg></div>
+        <div class="eco__arrow eco__arrow--down"><svg viewBox="0 0 12 12"><path d="M6 11 1 5h10z"/></svg></div>
+      </div>
+
+      <div class="eco__cols">
+        <div class="eco__col">
+          <span class="eco__std">IEC 61508</span>
+          <h4>Cause: malfunction</h4>
+          <p>
+            The safety-related control system is faulted. Answered with SIL determination,
+            safety functions, diagnostic coverage and hardware fault metrics.
+          </p>
+        </div>
+        <div class="eco__col">
+          <span class="eco__std">TR 5469 · TS 22440 · TS 25223</span>
+          <h4>Cause: untrustworthy AI</h4>
+          <p>
+            The system is fault-free but its learned behaviour can't be trusted. Answered with
+            AI risk analysis, safety requirements for adaptive systems and calibrated
+            uncertainty.
+          </p>
+        </div>
+        <div class="eco__col">
+          <span class="eco__std">UL 4600 · UL 3115</span>
+          <h4>Cause: no assurance case</h4>
+          <p>
+            The behaviour may well be safe, but nobody can show it. Answered with a structured
+            safety case and independent certification evidence.
+          </p>
+        </div>
+      </div>
+
+      <div class="eco__flow" aria-hidden="true">
+        <div class="eco__arrow"><svg viewBox="0 0 12 12"><path d="M6 1 1 7h10z"/></svg></div>
+        <div class="eco__arrow"><svg viewBox="0 0 12 12"><path d="M6 1 1 7h10z"/></svg></div>
+        <div class="eco__arrow"><svg viewBox="0 0 12 12"><path d="M6 1 1 7h10z"/></svg></div>
+      </div>
+
+      <div class="eco__cap eco__cap--case">
+        One integrated safety case
+        <small>Traceable to EU Machinery Regulation 2023/1230 conformity, ISO 3691-4 / ANSI RIA R15.08 acceptance, and customer or insurer due diligence</small>
+      </div>
+    </div>
+
+    <div class="btn-row reveal" style="justify-content:center">
+      <a class="btn btn--cyan" href="robotics-services.html">
+        See how the standards interlock
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8v8H3V3Zm10 0h8v8h-8V3ZM3 13h8v8H3v-8Zm10 0h8v8h-8v-8Z"/></svg>
+        Services
+      </p>
+      <h2>Three practices, deliberately not separate</h2>
+      <p class="lede">
+        Engage one where you have a specific gap, or all three where you need a complete
+        argument. Either way the work product is designed to slot into the same safety case.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+      <a class="frame reveal" href="robotics-service-functional-safety.html">
+        <article class="card">
+          <p class="card__num">01 / Functional safety</p>
+          <h3>IEC 61508</h3>
+          <p>
+            Safety-related control system architecture, SIL determination, hardware fault
+            metrics, systematic capability, and the functional safety case for the E/E/PE
+            parts of a robotic or autonomous system.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore IEC 61508
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+
+      <a class="frame reveal" href="robotics-service-safe-ai.html" data-delay="90">
+        <article class="card">
+          <p class="card__num">02 / Artificial intelligence</p>
+          <h3>Safe AI</h3>
+          <p>
+            AI risk analysis, safety requirements for adaptive and learned behaviour, model
+            evaluation and calibrated uncertainty — from ISO/IEC TR 5469 guidance through to
+            the emerging TS 22440 and TS 25223 specifications.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore Safe AI
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+
+      <a class="frame reveal" href="robotics-service-autonomy-certification.html" data-delay="180">
+        <article class="card">
+          <p class="card__num">03 / Autonomy &amp; certification</p>
+          <h3>UL 4600 · UL 3115</h3>
+          <p>
+            Safety-case-based evaluation of autonomous products and certification of AI-based
+            products, mapped to the evidence a customer, insurer or certification body will
+            actually accept.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore certification
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO WE SERVE ============ -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 3.5A6.5 6.5 0 0 1 18.5 12H12V5.5Z"/></svg>
+        Who we serve
+      </p>
+      <h2>Four kinds of machine, one safety discipline</h2>
+      <p class="lede">
+        The physical form changes what can go wrong. It doesn't change the questions we ask
+        about it.
+      </p>
+    </div>
+
+    <div class="grid grid-4 bot-grid">
+      <div class="frame reveal">
+        <article class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="9" rx="2.5"/><circle cx="12" cy="6.5" r="2.3"/><rect x="6" y="19" width="2" height="2" rx=".4"/><rect x="16" y="19" width="2" height="2" rx=".4"/></svg>
+          </div>
+          <h3>AGVs &amp; AMRs</h3>
+          <p>
+            Automated guided vehicles and autonomous mobile robots navigating warehouses,
+            factories and hospitals — where ISO&nbsp;3691-4 and ANSI/RIA&nbsp;R15.08 meet
+            functional safety and AI perception.
+          </p>
+        </article>
+      </div>
+
+      <div class="frame reveal" data-delay="70">
+        <article class="card">
+          <div class="card__icon card__icon--lime">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="15" width="19" height="3" rx="1"/><circle cx="6" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><rect x="6" y="6" width="12" height="8" rx="1"/></svg>
+          </div>
+          <h3>Moving platforms</h3>
+          <p>
+            Wheeled and tracked platforms carrying payloads or people, where safety-rated
+            stopping, obstacle detection and autonomy assurance have to work together.
+          </p>
+        </article>
+      </div>
+
+      <div class="frame reveal" data-delay="140">
+        <article class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="4" cy="20" r="2.2"/><rect x="3.2" y="10" width="1.6" height="9" rx=".8"/><rect x="6" y="7" width="10" height="2.6" rx="1.3" transform="rotate(-25 6 7)"/><rect x="13" y="4" width="8" height="2.4" rx="1.2" transform="rotate(20 13 4)"/><circle cx="20.5" cy="6.5" r="1.8"/></svg>
+          </div>
+          <h3>Robot arms</h3>
+          <p>
+            Fixed and mobile manipulators performing tasks alongside people or fully
+            autonomously, where safety functions and AI-driven grasping both need to be
+            proven safe.
+          </p>
+        </article>
+      </div>
+
+      <div class="frame reveal" data-delay="210">
+        <article class="card">
+          <div class="card__icon card__icon--lime">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="3"/><rect x="8.5" y="9.5" width="7" height="8" rx="2.5"/><rect x="5.3" y="10.5" width="2" height="7" rx="1" transform="rotate(-18 5.3 10.5)"/><rect x="16.7" y="10.5" width="2" height="7" rx="1" transform="rotate(18 16.7 10.5)"/><rect x="9" y="17.5" width="2.4" height="6" rx="1"/><rect x="12.6" y="17.5" width="2.4" height="6" rx="1"/></svg>
+          </div>
+          <h3>Humanoids</h3>
+          <p>
+            Bipedal and human-scale robots combining actuation, perception and
+            decision-making in one platform — the hardest single case for an integrated
+            safety argument.
+          </p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW WE WORK ============ -->
+<section class="section">
+  <div class="container">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow eyebrow--lime">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v5.3l4 2.4-.9 1.5-5.1-3V7h2Z"/></svg>
+          Engagement
+        </p>
+        <h2>How we work</h2>
+        <p class="lede">
+          Consulting that produces artefacts, not slideware. Every engagement ends with
+          something you can hand to a certification body, an integrator or a customer.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--ghost" href="#contact">Discuss a project</a>
+        </div>
+      </div>
+
+      <div class="steps grid-2 reveal">
+        <div class="step">
+          <h4>Assess</h4>
+          <p>
+            Gap and readiness assessment against IEC&nbsp;61508, the emerging AI-safety
+            standards and UL's certification requirements at once. A prioritised finding
+            list mapped to clauses, not a generic maturity score.
+          </p>
+        </div>
+        <div class="step">
+          <h4>Architect</h4>
+          <p>
+            Safety functions, decomposition and the allocation of requirements across
+            functional safety, AI safety and certification evidence — so the architecture
+            carries the argument rather than fighting it.
+          </p>
+        </div>
+        <div class="step">
+          <h4>Evidence</h4>
+          <p>
+            A verification and validation strategy that says what each test proves: fault
+            injection, model evaluation, uncertainty calibration and the coverage rationale
+            behind them.
+          </p>
+        </div>
+        <div class="step">
+          <h4>Argue</h4>
+          <p>
+            A structured safety case — goals, strategies, context, evidence — with a
+            defensible residual risk statement, plus support through independent assessment
+            and certification.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REGULATORY ============ -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 6v6c0 5 3.8 9.4 9 10 5.2-.6 9-5 9-10V6l-9-4Z"/></svg>
+        Regulatory readiness
+      </p>
+      <h2>The standards are the means. Certification is the end.</h2>
+      <p class="lede">
+        Standards conformance is necessary but not sufficient. We shape the technical
+        evidence so it maps directly onto the regulatory instrument or certificate you
+        actually need.
+      </p>
+    </div>
+
+    <div class="grid grid-4">
+      <div class="frame reveal">
+        <article class="card">
+          <h4>EU Machinery Reg. 2023/1230</h4>
+          <p>
+            The new EU rulebook for machinery, applicable from January 2027, with expanded
+            scope that now explicitly covers autonomous mobile machinery, AI-based safety
+            systems, industrial robots and cobots.
+          </p>
+        </article>
+      </div>
+      <div class="frame reveal" data-delay="70">
+        <article class="card">
+          <h4>ISO 3691-4</h4>
+          <p>
+            The core Type-C safety standard for driverless industrial trucks and their
+            systems — the reference point for AGV and AMR safety functions, person
+            detection and braking performance.
+          </p>
+        </article>
+      </div>
+      <div class="frame reveal" data-delay="140">
+        <article class="card">
+          <h4>ANSI/RIA R15.08</h4>
+          <p>
+            Industrial mobile robot safety requirements for the US market, covering the
+            robot itself, system integration and — in its forthcoming Part&nbsp;3 — the
+            user's operating environment.
+          </p>
+        </article>
+      </div>
+      <div class="frame reveal" data-delay="210">
+        <article class="card">
+          <h4>UL certification pathway</h4>
+          <p>
+            Where standards conformance turns into a certificate: UL&nbsp;4600 safety-case
+            evaluation and UL&nbsp;3115 AI-product certification, mapped against ISO, IEC
+            and NIST frameworks for cross-recognition.
+          </p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="founder reveal">
+      <div class="founder__frame">
+        <img class="founder__photo" src="assets/img/saim.jpg" alt="Dr. Saim Simon Perveen">
+      </div>
+
+      <div>
+        <p class="eyebrow">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Z"/></svg>
+          About
+        </p>
+        <h2>Dr. Saim Simon Perveen</h2>
+        <p style="color:var(--lime);font-family:var(--font-head);font-weight:700;margin-top:-.35rem">
+          Build your trustworthy system with me
+        </p>
+        <p class="lede" style="margin-top:1.1rem">
+          safeautonomy is an independent consultancy for the safety of robotic and autonomous
+          systems. We work with robot manufacturers, systems integrators and logistics and
+          manufacturing operators at exactly the point where functional safety, AI safety
+          and autonomy certification stop being separate disciplines.
+        </p>
+        <ul class="checks" style="margin-top:1.6rem">
+          <li>Safety concepts and safety cases for AGVs, mobile platforms, robot arms and humanoids</li>
+          <li>Independent review and certification readiness before it costs you a deployment or a contract</li>
+          <li>Training and coaching that leaves your team able to run the process without us</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="locations reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 6v6c0 5 3.8 9.4 9 10 5.2-.6 9-5 9-10V6l-9-4Z"/></svg>
+        Where we work
+      </p>
+      <h3>Luxembourg, close to one of Europe's densest robotics deployments</h3>
+      <p class="lede">
+        Based centrally in Luxembourg and regularly on site in Wolfsburg — inside one of
+        Europe's largest concentrations of industrial robots, AGVs and automated logistics,
+        across Volkswagen's manufacturing plants and its supplier base — close enough to sit
+        with your integration team, not just review documents from a distance.
+      </p>
+
+      <div class="grid grid-2" style="margin-top:2rem">
+        <div class="frame location-card">
+          <div>
+            <div class="location-card__map">
+              <iframe
+                src="https://www.google.com/maps?q=Luxembourg&output=embed"
+                title="Map showing Luxembourg"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="location-card__body">
+              <span class="tag tag--lime">Home base</span>
+              <h4>Luxembourg</h4>
+              <p>Working across the EU from the Grand Duchy.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="frame location-card">
+          <div>
+            <div class="location-card__map">
+              <iframe
+                src="https://www.google.com/maps?q=Wolfsburg,Germany&output=embed"
+                title="Map showing Wolfsburg, Germany"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="location-card__body">
+              <span class="tag">On site</span>
+              <h4>Wolfsburg, Germany</h4>
+              <p>Regular presence in one of Europe's largest robotics and automation manufacturing hubs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section section--alt" id="contact">
+  <div class="container">
+    <div class="cta-band cut reveal">
+      <p class="eyebrow eyebrow--lime" style="justify-content:center">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Z"/></svg>
+        Get in touch
+      </p>
+      <h2>Let's find out where your safety argument breaks</h2>
+      <p class="lede center">
+        A 30-minute call is usually enough to tell whether your gap is in functional safety,
+        in the AI evidence, in the certification case — or in the traceability between them.
+      </p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--primary" href="https://wa.me/352661553282">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6s.6-1.8.8-2.1c.2-.2.5-.3.6-.3h.5c.1 0 .3 0 .5.4l.7 1.7c.1.1.1.3 0 .5l-.3.4-.3.4c-.1.1-.2.3 0 .5l.9 1.3c.6.7 1.1 1 1.6 1.2.2.1.3.1.5-.1l.7-.8c.1-.2.3-.2.5-.1l1.6.8c.2.1.4.2.4.3.1.1.1.5-.1 1Z"/></svg>
+          WhatsApp +352 661 553 282
+        </a>
+        <a class="btn btn--ghost" href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a>
+      </div>
+    </div>
+
+    <div class="contact-grid reveal" style="margin-top:1.15rem">
+      <div class="frame">
+        <div class="card contact-card">
+          <p class="contact-card__l">Phone / WhatsApp</p>
+          <a class="contact-card__v" href="tel:+352661553282">+352 661 553 282</a>
+        </div>
+      </div>
+      <div class="frame">
+        <div class="card contact-card">
+          <p class="contact-card__l">Email</p>
+          <a class="contact-card__v" href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a>
+        </div>
+      </div>
+      <div class="frame">
+        <div class="card contact-card">
+          <p class="contact-card__l">Based in</p>
+          <p class="contact-card__v">Luxembourg — working across the EU</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="index.html">
+          <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+          <span class="logo__text">safe<span>autonomy</span></span>
+        </a>
+        <p class="footer__blurb">
+          Bridging IEC 61508, AI safety and autonomy certification into one defensible
+          safety argument for robotics.
+        </p>
+        <p style="margin-top:1rem"><a href="automotive.html" style="font-family:var(--font-head);font-weight:700;font-size:.85rem;color:var(--muted)">Looking for automotive? →</a></p>
+      </div>
+
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="robotics-services.html">Overview</a></li>
+          <li><a href="robotics-service-functional-safety.html">Functional safety</a></li>
+          <li><a href="robotics-service-safe-ai.html">Safe AI</a></li>
+          <li><a href="robotics-service-autonomy-certification.html">Autonomy certification</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="robotics.html#about">About</a></li>
+          <li><a href="robotics-blog.html">Blog</a></li>
+          <li><a href="robotics.html#contact">Contact</a></li>
+          <li><a href="index.html">All industries</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a></li>
+          <li><a href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a></li>
+          <li><a href="https://www.linkedin.com/in/dr-simon-saim-perveen-5b797918a/">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; <span data-year>2026</span> safeautonomy. All rights reserved.</p>
+      <p>IEC 61508 · AI safety · UL 4600 · UL 3115</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

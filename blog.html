@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog — notes on functional safety, SOTIF and safe AI | safeautonomy</title>
+<meta name="description" content="Practitioner notes on ISO 26262, ISO 21448 (SOTIF), ISO/PAS 8800 and the regulation of automated driving — written for engineers who have to defend the argument.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2329D3D8' d='M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+  /* topic filter chips — blog only */
+  .chips { display: flex; flex-wrap: wrap; gap: .55rem; margin-bottom: 2.25rem; }
+  .chips button { cursor: pointer; font-family: var(--font-head); transition: all .18s var(--ease); }
+  .chips button:hover { color: var(--white); border-color: var(--line-2); }
+  .chips button.tag--lime:hover { color: var(--lime); }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="index.html">
+      <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+      <span class="logo__text">safe<span>autonomy</span></span>
+    </a>
+    <button class="burger" aria-label="Toggle navigation" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+    </button>
+    <nav class="nav" aria-label="Main">
+      <div class="domain-switch" role="group" aria-label="Choose industry">
+        <a href="automotive.html" class="is-active">Automotive</a>
+        <a href="robotics.html">Robotics</a>
+      </div>
+      <a class="nav__link" href="automotive.html" data-nav="automotive.html">Home</a>
+      <div class="nav__item">
+        <a class="nav__link nav__toggle" href="services.html" data-nav="services.html service-iso-26262.html service-sotif.html service-safe-ai.html" aria-expanded="false" aria-haspopup="true">
+          Services <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 4l5 5 5-5z"/></svg>
+        </a>
+        <div class="nav__menu">
+          <a href="services.html">Services overview<small>How the standards form one hazard ecosystem</small></a>
+          <a href="service-iso-26262.html">ISO 26262<small>Functional safety of E/E systems</small></a>
+          <a href="service-sotif.html">ISO 21448 — SOTIF<small>Safety of the intended functionality</small></a>
+          <a href="service-safe-ai.html">Safe AI — ISO/PAS 8800<small>Safety assurance for machine learning</small></a>
+        </div>
+      </div>
+      <a class="nav__link" href="blog.html" data-nav="blog.html">Blog</a>
+      <a class="nav__link" href="automotive.html#about">About</a>
+      <div class="nav__cta"><a class="btn btn--primary" href="automotive.html#contact">Talk to us</a></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero hero--page">
+  <div class="hero__media">
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="assets/video/hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="arcs arcs--br" aria-hidden="true"></div>
+  <div class="container hero__inner">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="automotive.html">Home</a> <span>/</span> <span>Blog</span>
+    </nav>
+    <p class="eyebrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5V3Zm3 6h9v1.8H8V9Zm0 4h9v1.8H8V13Zm0 4h6v1.8H8V17Z"/></svg>
+      Blog
+    </p>
+    <h1>Notes from the seams</h1>
+    <p class="hero__sub">
+      Practitioner writing on functional safety, SOTIF, safety for machine learning and the
+      regulation that ties them together. No standard summaries — the parts that are actually
+      contested.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <div class="chips reveal" role="group" aria-label="Filter posts by topic">
+      <button class="tag tag--lime" data-filter="all" aria-pressed="true">All posts</button>
+      <button class="tag tag--plain" data-filter="iso26262" aria-pressed="false">ISO 26262</button>
+      <button class="tag tag--plain" data-filter="sotif" aria-pressed="false">SOTIF</button>
+      <button class="tag tag--plain" data-filter="ai" aria-pressed="false">Safe AI</button>
+      <button class="tag tag--plain" data-filter="regulation" aria-pressed="false">Regulation</button>
+      <button class="tag tag--plain" data-filter="practice" aria-pressed="false">Practice</button>
+    </div>
+
+    <!-- ================= POST 1 (featured) ================= -->
+    <details class="post post--feature reveal" data-topics="sotif iso26262 practice" open>
+        <summary>
+          <div class="post__meta">
+            <span class="tag tag--lime">Featured</span>
+            <time datetime="2026-07-14">14 July 2026</time>
+            <span>·</span><span>9 min read</span>
+            <span>·</span><span>SOTIF · ISO 26262</span>
+          </div>
+          <h3>The finding nobody owns: why fault and insufficiency need one tracker</h3>
+          <p class="post__excerpt">
+            The most expensive defects in an automated driving programme are not the hard ones.
+            They are the ones that sit exactly between two teams' definitions of what a defect is.
+          </p>
+          <span class="post__more">Read the article
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9 1 3h10z"/></svg>
+          </span>
+        </summary>
+
+        <div class="post__body prose">
+          <p>
+            Every programme we review has two defect populations. One lives in the functional safety
+            world: traceable to a requirement, assigned an ASIL, closed by a verification result. The
+            other lives in the perception or validation world: a clip where the system behaved badly,
+            a scenario that produced a false negative, a disengagement nobody can fully explain.
+          </p>
+          <p>
+            They are managed in different tools, triaged by different people, and reported to
+            management on different slides. And the hazard does not care.
+          </p>
+
+          <h3>Why the split happens</h3>
+          <p>
+            It happens because the two communities inherited different definitions of "wrong".
+            Functional safety defines wrong as <em>deviation from specification</em>. Perception
+            engineering defines wrong as <em>deviation from ground truth</em>. Most of the time
+            these coincide. In automated driving they routinely do not: the component can match its
+            specification perfectly and still be wrong about the world, because the specification
+            was written by people who had not met that part of the world yet.
+          </p>
+          <p>
+            The result is a triage question with no owner. A perception miss arrives. Is it a fault
+            — something is broken, fix it, close it under ISO 26262? Or an insufficiency — nothing
+            is broken, this belongs in the SOTIF analysis and possibly in the ODD? In practice
+            nobody asks, because asking requires both teams in the room and the ticket has to be
+            assigned to one of them by Friday.
+          </p>
+
+          <h3>The triage question that fixes most of it</h3>
+          <p>
+            We introduce one mandatory field on every safety-relevant observation, and it changes
+            the conversation more than any process document:
+          </p>
+          <div class="callout">
+            <p>
+              <strong>If every component in this chain had behaved exactly as specified, would this
+              observation still have occurred?</strong>
+            </p>
+          </div>
+          <p>
+            <strong>No</strong> → something deviated. It is a fault, it belongs in the ISO 26262
+            branch, and the question becomes whether the safety mechanism that should have caught
+            it exists and works.
+          </p>
+          <p>
+            <strong>Yes</strong> → the specification and the implementation are both intact, and the
+            world was simply outside what they anticipated. It is an insufficiency. It belongs in
+            the SOTIF branch, and the response is a functional improvement, an ODD restriction, or
+            an accepted residual risk with a rationale.
+          </p>
+          <p>
+            <strong>Yes, and the component is learned</strong> → it goes further, into the AI
+            branch, where the real question is which dataset or training decision produced it. This
+            third case is the one most often mishandled: it gets logged as an environmental edge
+            case, road-tested a few more times, and returns two releases later because the root
+            cause was never in the environment at all.
+          </p>
+
+          <h3>What changes when you do this</h3>
+          <p>
+            Three things, in our experience. Coverage becomes visible — you can finally see that
+            85&nbsp;% of your open safety observations are insufficiencies while 90&nbsp;% of your
+            safety effort is going into fault handling. Rework drops, because insufficiencies stop
+            being routed to teams who can only fix faults. And the safety case starts writing
+            itself, because every observation already carries the branch it belongs to.
+          </p>
+          <p>
+            The tooling matters far less than the field. We have seen it work in Jira with a custom
+            dropdown. What does not work is two trackers and a monthly alignment meeting.
+          </p>
+        </div>
+    </details>
+
+    <!-- ================= POST 2 ================= -->
+    <details class="post reveal" data-topics="ai sotif">
+        <summary>
+          <div class="post__meta">
+            <time datetime="2026-06-30">30 June 2026</time>
+            <span>·</span><span>7 min read</span>
+            <span>·</span><span>Safe AI</span>
+          </div>
+          <h3>Your mAP is not safety evidence</h3>
+          <p class="post__excerpt">
+            A single aggregate accuracy number, however good, cannot discharge a safety requirement.
+            Here is what an assessor is actually going to ask you for instead.
+          </p>
+          <span class="post__more">Read the article
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9 1 3h10z"/></svg>
+          </span>
+        </summary>
+
+        <div class="post__body prose">
+          <p>
+            Mean average precision is a model selection metric. It was designed to rank candidate
+            architectures against a fixed benchmark, and it does that well. It was never designed
+            to support a claim about harm, and it fails at that job in four specific ways.
+          </p>
+
+          <h3>1. It aggregates away the cases that matter</h3>
+          <p>
+            Safety risk is concentrated in rare conditions: unusual poses, occlusion, low
+            illumination, small and distant objects, under-represented road user types. Those are
+            precisely the cases with the fewest samples, so they contribute least to an aggregate
+            score. A model can improve its headline number while degrading on every safety-critical
+            slice. Stratify by the ODD dimensions in your operational design domain and report each
+            one separately — including the ones with uncomfortable numbers.
+          </p>
+
+          <h3>2. It has no notion of consequence asymmetry</h3>
+          <p>
+            Missing a pedestrian and hallucinating a phantom obstacle are both errors and are not
+            remotely equivalent. One risks a collision; the other risks a rear-end from an
+            unnecessary brake event — which is also a hazard, just a different one. Your metrics
+            need to separate false negatives from false positives per class, and both need to be
+            traceable to the hazardous events they contribute to.
+          </p>
+
+          <h3>3. It says nothing about the distribution it was measured on</h3>
+          <p>
+            A number without its test distribution is uninterpretable. If the evaluation set was
+            drawn from the same collection campaign as the training data, it measures interpolation,
+            not generalisation. The assessor's question is not "what is your accuracy" but "on what
+            distribution, how was it constructed, and how does it relate to the ODD you intend to
+            operate in".
+          </p>
+
+          <h3>4. It is a point estimate with no uncertainty</h3>
+          <p>
+            For a rare class with a few hundred test instances, the confidence interval on your
+            detection rate is far wider than the improvement you are celebrating between releases.
+            Report intervals. Justify sample sizes. If the interval is too wide to support the
+            claim, the honest conclusion is that you need more data, not a rounder number.
+          </p>
+
+          <div class="callout callout--cyan">
+            <p>
+              <strong>The reframe.</strong> Stop asking "how good is the model" and start asking
+              "which safety requirement does this result discharge, over which part of the ODD,
+              with what confidence, and what is the safety reaction when it is wrong". ISO/PAS 8800
+              is essentially a long, careful answer to that question.
+            </p>
+          </div>
+
+          <p>
+            None of this means model metrics are useless. It means they are an input to safety
+            evidence, not the evidence itself. The evidence is the argument that connects them to a
+            hazard.
+          </p>
+        </div>
+    </details>
+
+    <!-- ================= POST 3 ================= -->
+    <details class="post reveal" data-topics="regulation practice">
+        <summary>
+          <div class="post__meta">
+            <time datetime="2026-06-11">11 June 2026</time>
+            <span>·</span><span>8 min read</span>
+            <span>·</span><span>Regulation</span>
+          </div>
+          <h3>AFGBV in practice: what the KBA dossier really demands</h3>
+          <p class="post__excerpt">
+            Germany has had a legal route to Level 4 operation since 2021. The engineering
+            consequences of the implementing ordinance are still widely underestimated.
+          </p>
+          <span class="post__more">Read the article
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9 1 3h10z"/></svg>
+          </span>
+        </summary>
+
+        <div class="post__body prose">
+          <p>
+            The Autonomous Driving Act amended the German road traffic act (StVG §1d–§1l) to permit
+            vehicles with an autonomous driving function to operate in a defined operational area.
+            The implementing ordinance — the AFGBV — turns that permission into a set of concrete
+            obligations. Teams tend to read it as a homologation formality. It is closer to a set of
+            architectural requirements with a legal deadline attached.
+          </p>
+
+          <h3>The defined operational area is a technical artefact</h3>
+          <p>
+            The <em>festgelegter Betriebsbereich</em> is not marketing language for "the city we
+            launch in". It is a bounded region within which you have to demonstrate the function is
+            safe, and outside which you must not operate. That makes your ODD specification a
+            regulatory document. If your ODD lives as prose in a concept slide deck, you do not yet
+            have one — you need a structured, testable definition with explicit exit conditions and
+            a demonstrable behaviour at every boundary.
+          </p>
+
+          <h3>The risk-minimal state has to be engineered, not asserted</h3>
+          <p>
+            The vehicle must be able to place itself in a <em>risikominimaler Zustand</em>
+            independently. This is a full function with its own hazard analysis, not a fallback
+            paragraph. What is the state? How is the decision to enter it made, and by what
+            evidence? What if the situation degrades during the manoeuvre? What if the fault is in
+            the component that is supposed to detect the need for it? Each of those questions is a
+            safety goal, and each of them cuts across all three standards.
+          </p>
+
+          <h3>Technical supervision is a system, not a person</h3>
+          <p>
+            The <em>Technische Aufsicht</em> can deactivate manoeuvres and release alternatives, but
+            not drive. That produces a set of requirements most programmes discover late: a
+            communication link with defined availability and latency, a situational awareness
+            interface with real human factors work behind it, defined behaviour on link loss,
+            and — critically — a human oversight function whose own failure modes are part of your
+            hazard analysis. This is also where the EU AI Act's human oversight obligations start
+            interacting with your safety concept.
+          </p>
+
+          <h3>Assessment is independent and evidence-hungry</h3>
+          <p>
+            The route to approval runs through a technical service and the KBA, and it expects an
+            argument, not a document library. Data recording obligations, incident reporting and
+            the ongoing duties on the operator mean the safety case does not end at start of
+            production — it becomes a living artefact fed by field data.
+          </p>
+
+          <div class="callout">
+            <p>
+              <strong>The practical advice.</strong> Read the annex requirements at the start of
+              concept phase, not during type approval preparation. Half of them are architectural.
+              Architecture is the one thing you cannot retrofit cheaply.
+            </p>
+          </div>
+        </div>
+    </details>
+
+    <!-- ================= POST 4 ================= -->
+    <details class="post reveal" data-topics="iso26262 practice">
+        <summary>
+          <div class="post__meta">
+            <time datetime="2026-05-22">22 May 2026</time>
+            <span>·</span><span>6 min read</span>
+            <span>·</span><span>ISO 26262</span>
+          </div>
+          <h3>Controllability was the load-bearing wall. Level 3 removed it.</h3>
+          <p class="post__excerpt">
+            A large share of the ASIL classifications in service today rest on a driver who is
+            watching the road. Above Level 2, that argument quietly stops being true — and almost
+            nobody re-runs the HARA.
+          </p>
+          <span class="post__more">Read the article
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9 1 3h10z"/></svg>
+          </span>
+        </summary>
+
+        <div class="post__body prose">
+          <p>
+            The controllability parameter in ISO 26262 asks how likely it is that the driver, or
+            another road user, can act to avoid the harm. It is one of the three inputs to ASIL, and
+            it is the one that has historically absorbed the most optimism. A C1 rather than a C3 is
+            frequently the difference between QM and ASIL C — between a normal development and a
+            programme with a safety manager, an assessor and a very different cost base.
+          </p>
+
+          <h3>The inherited assumption</h3>
+          <p>
+            For decades that optimism was defensible. There was a driver, they were legally required
+            to be attentive, they had hands near the wheel, and the failure modes in question
+            produced symptoms a human could react to within a second or two. The classification
+            rationale often did not even state the assumption, because it was universal.
+          </p>
+          <p>
+            Then the same platform got a conditional automation feature. The driver is now permitted
+            to look away. Their reaction time is no longer one second; it is the takeover transition
+            time plus the time to build situational awareness, and the literature on that is
+            sobering. Meanwhile the classification rationale from the previous programme was
+            inherited wholesale, because the hardware did not change and nobody flagged the item
+            definition as modified.
+          </p>
+
+          <h3>What a valid re-assessment looks like</h3>
+          <ul>
+            <li>State the assumed driver state explicitly for every controllability rating — attentive, permitted to be disengaged, absent, or remotely supervising.</li>
+            <li>Use a takeover time budget with a source, not a reflex estimate. Include the perception-of-situation phase, not just the hands-on-wheel phase.</li>
+            <li>Check whether the controllability argument depends on a warning strategy that itself has an ASIL — if the warning fails silently, the controllability claim fails with it.</li>
+            <li>For Level 4, remove the driver from the argument entirely and ask what the system does instead. That is usually where the risk-minimal state requirement appears.</li>
+            <li>Re-run the HARA on item definition change, not on hardware change. This is the process gap that lets stale ratings survive.</li>
+          </ul>
+
+          <div class="callout">
+            <p>
+              <strong>The uncomfortable outcome.</strong> Done honestly, this exercise tends to move
+              a handful of items up an ASIL. That is expensive and it is also the point — the
+              alternative is a safety case whose foundation contains an assumption that the product
+              brochure explicitly contradicts.
+            </p>
+          </div>
+        </div>
+    </details>
+
+    <!-- ================= POST 5 ================= -->
+    <details class="post reveal" data-topics="sotif practice">
+        <summary>
+          <div class="post__meta">
+            <time datetime="2026-05-05">5 May 2026</time>
+            <span>·</span><span>7 min read</span>
+            <span>·</span><span>SOTIF</span>
+          </div>
+          <h3>Kilometres are not coverage</h3>
+          <p class="post__excerpt">
+            Fleet mileage is the most quoted and least informative validation metric in the
+            industry. What replaces it is harder, and considerably more convincing.
+          </p>
+          <span class="post__more">Read the article
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9 1 3h10z"/></svg>
+          </span>
+        </summary>
+
+        <div class="post__body prose">
+          <p>
+            The statistical argument against mileage-based validation is well known: demonstrating a
+            failure rate comparable to human drivers by observation alone requires a number of
+            kilometres that no programme can afford, and every software change resets the clock.
+            The argument is correct, it has been made repeatedly for a decade, and programmes still
+            report progress in kilometres. It is worth asking why.
+          </p>
+          <p>
+            The reason is that mileage is easy to measure and coverage is not. Replacing it requires
+            you to define what the space is that you are covering — and that definition is
+            uncomfortable, because it forces you to admit how much of it you have not characterised.
+          </p>
+
+          <h3>What a coverage argument actually contains</h3>
+          <p>
+            <strong>A parameterised scenario space derived from the ODD.</strong> Not a list of test
+            cases — a description of the dimensions along which scenarios vary, with the ranges each
+            one can take inside your operational domain.
+          </p>
+          <p>
+            <strong>A sampling strategy with a rationale.</strong> Combinatorial coverage on the
+            discrete dimensions, importance sampling towards criticality on the continuous ones, and
+            an explicit statement of which interactions you are and are not exploring.
+          </p>
+          <p>
+            <strong>A criticality-aware allocation.</strong> Uniform sampling wastes almost all of
+            its budget on benign scenarios. The scenarios worth simulating a thousand times are the
+            ones near the performance boundary, which means you need a way to find that boundary —
+            usually search-based or adversarial scenario generation.
+          </p>
+          <p>
+            <strong>A residual claim.</strong> The coverage argument ends by stating what fraction of
+            the space is characterised, what is known to be unsafe and has been addressed, and what
+            the remaining uncharacterised space is estimated to contain. That last number is Area 3,
+            and it is the number the assessor came for.
+          </p>
+
+          <div class="callout callout--cyan">
+            <p>
+              <strong>Where kilometres do belong.</strong> Field operation is excellent at
+              <em>discovering</em> scenarios you did not know existed — converting unknowns into
+              knowns. It is poor at <em>proving</em> the absence of risk. Use it as a discovery
+              instrument feeding your scenario catalogue, and make that role explicit in the V&amp;V
+              strategy. It stops being a weak argument and becomes a strong one.
+            </p>
+          </div>
+        </div>
+    </details>
+
+    <!-- ================= POST 6 ================= -->
+    <details class="post reveal" data-topics="ai iso26262">
+        <summary>
+          <div class="post__meta">
+            <time datetime="2026-04-18">18 April 2026</time>
+            <span>·</span><span>6 min read</span>
+            <span>·</span><span>Safe AI · ISO 26262</span>
+          </div>
+          <h3>The forgotten interface: where your model meets the accelerator</h3>
+          <p class="post__excerpt">
+            ML teams evaluate the model. Safety teams analyse the hardware. Between them sits the
+            deployment toolchain, which changes the function and belongs to nobody.
+          </p>
+          <span class="post__more">Read the article
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9 1 3h10z"/></svg>
+          </span>
+        </summary>
+
+        <div class="post__body prose">
+          <p>
+            The model that was evaluated is rarely the model that ships. Between the two sit
+            quantisation, operator fusion, graph rewriting, pruning, a vendor compiler and a runtime
+            scheduler. Each of these changes the numerical behaviour of the function. Most of them
+            are treated as a build step.
+          </p>
+
+          <h3>Three questions that usually have no owner</h3>
+          <p>
+            <strong>What did quantisation cost you, and where?</strong> Post-training quantisation
+            to INT8 typically costs a small amount of aggregate accuracy. That aggregate hides the
+            distribution: the loss concentrates in low-confidence, low-contrast, small-object cases
+            — the same safety-critical slices discussed elsewhere on this blog. If the deployed
+            model was not re-evaluated on the stratified protocol, the safety evidence describes a
+            different function than the one in the vehicle.
+          </p>
+          <p>
+            <strong>Is the toolchain qualified?</strong> A compiler that transforms a safety-related
+            function is a software tool in the ISO 26262 sense, with a tool confidence level and
+            potentially a qualification requirement. Vendor toolchains for ML accelerators are
+            frequently newer, less mature and less transparent than the compilers the same
+            organisation qualified carefully for its classic ECUs.
+          </p>
+          <p>
+            <strong>What happens when the accelerator computes the wrong answer?</strong> Random
+            hardware faults in accelerator memory or MAC arrays do not announce themselves. They
+            produce a plausible tensor with wrong values, and the network's output degrades
+            gracefully — which is exactly the worst behaviour, because there is no exception to
+            catch. This is a dependent failure analysis question, and the model's own sensitivity to
+            corrupted computation is an input to it.
+          </p>
+
+          <h3>How to close it</h3>
+          <ul>
+            <li>Treat the deployed artefact as the item under evaluation, and re-run the safety-relevant evaluation on target — not on a workstation with a different numerical path.</li>
+            <li>Classify the ML toolchain formally and qualify it, or argue the confidence level down with evidence from your own verification.</li>
+            <li>Include the inference platform in the dependent failure analysis, with the model treated as a component whose failure behaviour under corrupted computation has been characterised.</li>
+            <li>Make timing and determinism explicit requirements. A perception pipeline that occasionally exceeds its budget under load is a functional safety finding, whatever its accuracy.</li>
+          </ul>
+
+          <div class="callout">
+            <p>
+              <strong>Organisationally.</strong> This interface needs one named owner who is
+              comfortable in both vocabularies. Where it has none, the gap is not usually discovered
+              in review — it is discovered by an assessor asking one very simple question about
+              which model was tested.
+            </p>
+          </div>
+        </div>
+    </details>
+
+    <p class="reveal" style="color:var(--muted-2);font-size:.9rem;margin-top:2rem">
+      More articles are published roughly monthly. For notification, reach out on
+      <a href="https://www.linkedin.com/in/dr-simon-saim-perveen-5b797918a/">LinkedIn</a>.
+    </p>
+
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band cut reveal">
+      <h2>Have a question these posts don't answer?</h2>
+      <p class="lede center">
+        Most of what is written here started as a client question. Yours is welcome too.
+      </p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--primary" href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a>
+        <a class="btn btn--ghost" href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="index.html">
+          <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+          <span class="logo__text">safe<span>autonomy</span></span>
+        </a>
+        <p class="footer__blurb">
+          Bridging ISO 26262, ISO 21448 and ISO/PAS 8800 into one defensible safety argument
+          for automated driving.
+        </p>
+        <p style="margin-top:1rem"><a href="robotics-blog.html" style="font-family:var(--font-head);font-weight:700;font-size:.85rem;color:var(--muted)">Looking for robotics? →</a></p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Overview</a></li>
+          <li><a href="service-iso-26262.html">ISO 26262</a></li>
+          <li><a href="service-sotif.html">SOTIF — ISO 21448</a></li>
+          <li><a href="service-safe-ai.html">Safe AI — ISO/PAS 8800</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="automotive.html#about">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="automotive.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a></li>
+          <li><a href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a></li>
+          <li><a href="https://www.linkedin.com/in/dr-simon-saim-perveen-5b797918a/">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; <span data-year>2026</span> safeautonomy. All rights reserved.</p>
+      <p>ISO 26262 · ISO 21448 · ISO/PAS 8800 · AFGBV</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

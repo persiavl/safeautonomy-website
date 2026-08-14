@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SOTIF — ISO 21448 consulting | safeautonomy</title>
+<meta name="description" content="ISO 21448 SOTIF consulting: ODD definition, triggering condition analysis, the known/unknown scenario space, acceptance criteria, scenario-based V&V and field monitoring.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2329D3D8' d='M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+  /* SOTIF scenario quadrant — used only on this page */
+  .quad { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line-2); }
+  .quad__cell { background: var(--bg-1); padding: 1.7rem 1.5rem; min-height: 175px; }
+  .quad__cell h4 { font-size: 1rem; margin-bottom: .45rem; }
+  .quad__cell p { font-size: .9rem; color: var(--muted); margin: 0; }
+  .quad__tag {
+    font-family: var(--font-head); font-size: .7rem; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase; margin-bottom: .8rem; display: block;
+  }
+  .quad__cell--1 { border-top: 2px solid var(--cyan); }
+  .quad__cell--1 .quad__tag { color: var(--cyan); }
+  .quad__cell--2 { border-top: 2px solid #FF8A5B; }
+  .quad__cell--2 .quad__tag { color: #FF8A5B; }
+  .quad__cell--3 { border-top: 2px solid #FF5B6E; background: linear-gradient(180deg, rgba(255,91,110,.07), var(--bg-1) 60%); }
+  .quad__cell--3 .quad__tag { color: #FF5B6E; }
+  .quad__cell--4 { border-top: 2px solid var(--muted-2); }
+  .quad__cell--4 .quad__tag { color: var(--muted); }
+  @media (max-width: 700px) { .quad { grid-template-columns: 1fr; } .quad__cell { min-height: 0; } }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="index.html">
+      <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+      <span class="logo__text">safe<span>autonomy</span></span>
+    </a>
+    <button class="burger" aria-label="Toggle navigation" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+    </button>
+    <nav class="nav" aria-label="Main">
+      <div class="domain-switch" role="group" aria-label="Choose industry">
+        <a href="automotive.html" class="is-active">Automotive</a>
+        <a href="robotics.html">Robotics</a>
+      </div>
+      <a class="nav__link" href="automotive.html" data-nav="automotive.html">Home</a>
+      <div class="nav__item">
+        <a class="nav__link nav__toggle" href="services.html" data-nav="services.html service-iso-26262.html service-sotif.html service-safe-ai.html" aria-expanded="false" aria-haspopup="true">
+          Services <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 4l5 5 5-5z"/></svg>
+        </a>
+        <div class="nav__menu">
+          <a href="services.html">Services overview<small>How the standards form one hazard ecosystem</small></a>
+          <a href="service-iso-26262.html">ISO 26262<small>Functional safety of E/E systems</small></a>
+          <a href="service-sotif.html">ISO 21448 — SOTIF<small>Safety of the intended functionality</small></a>
+          <a href="service-safe-ai.html">Safe AI — ISO/PAS 8800<small>Safety assurance for machine learning</small></a>
+        </div>
+      </div>
+      <a class="nav__link" href="blog.html" data-nav="blog.html">Blog</a>
+      <a class="nav__link" href="automotive.html#about">About</a>
+      <div class="nav__cta"><a class="btn btn--primary" href="automotive.html#contact">Talk to us</a></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero hero--page">
+  <div class="hero__media">
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="assets/video/hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="arcs arcs--br" aria-hidden="true"></div>
+  <div class="container hero__inner">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="automotive.html">Home</a> <span>/</span> <a href="services.html">Services</a> <span>/</span> <span>SOTIF</span>
+    </nav>
+    <p class="eyebrow eyebrow--lime">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5c-5 0-8.6 4.2-9.5 7.5.9 3.3 4.5 7.5 9.5 7.5s8.6-4.2 9.5-7.5c-.9-3.3-4.5-7.5-9.5-7.5Zm0 12.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10Z"/></svg>
+      Practice 02 · Intended functionality
+    </p>
+    <h1>SOTIF — ISO 21448</h1>
+    <p class="hero__sub">
+      Nothing is broken and the vehicle is still unsafe. SOTIF is the discipline of bounding the
+      risk that comes from a function simply not being good enough — and proving how much of the
+      world you have actually seen.
+    </p>
+  </div>
+</section>
+
+<!-- WHAT IT COVERS -->
+<section class="section">
+  <div class="container">
+    <div class="split">
+      <div class="sticky reveal">
+        <p class="eyebrow">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v2H4V4Zm0 5h16v2H4V9Zm0 5h10v2H4v-2Z"/></svg>
+          Scope
+        </p>
+        <h2>Safety of the intended functionality</h2>
+        <p class="lede">
+          ISO 21448 addresses hazards arising from <strong>functional insufficiencies</strong> of
+          the intended functionality, and from <strong>reasonably foreseeable misuse</strong> —
+          in the absence of any fault.
+        </p>
+        <div class="callout">
+          <p>
+            <strong>The test.</strong> If you removed every fault from the system and the hazard
+            could still occur, it is a SOTIF hazard. Most perception, prediction and planning
+            hazards in automated driving are on this side of the line.
+          </p>
+        </div>
+      </div>
+
+      <div class="prose reveal">
+        <h3>Insufficiency is not a defect</h3>
+        <p>
+          A radar that cannot separate a stationary vehicle from an overhead gantry is not
+          broken — it is operating within its physical limits. A classifier that has never seen
+          a particular object pose is not defective — it is generalising, and generalisation has
+          edges. A driver who takes their hands off the wheel because the system usually copes is
+          not sabotaging you — they are behaving in a way you could have foreseen.
+        </p>
+        <p>
+          ISO 21448 groups these into two root sources: <strong>performance limitations</strong>
+          of the sensing, algorithmic and actuation chain, and <strong>specification
+          insufficiencies</strong> where the intended behaviour was defined for a world narrower
+          than the real one. Foreseeable misuse is treated as a first-class hazard cause, not an
+          afterthought.
+        </p>
+
+        <h3>Triggering conditions</h3>
+        <p>
+          The insufficiency is latent until something activates it. That something is the
+          <strong>triggering condition</strong> — the specific combination of scenario elements
+          that turns a limitation into a hazardous behaviour. Sun elevation and azimuth. Wet
+          retro-reflective markings. A motorcycle in a lane-split geometry. Snow on the sensor
+          fascia at a particular temperature.
+        </p>
+        <p>
+          The engineering work is systematic identification of these conditions, and it is
+          genuinely hard: they are combinatorial, they interact, and by definition the dangerous
+          ones are the ones nobody has thought of. Which is why the standard reframes the problem
+          in terms of scenario space rather than requirement lists.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE QUADRANT -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8v8H3V3Zm10 0h8v8h-8V3ZM3 13h8v8H3v-8Zm10 0h8v8h-8v-8Z"/></svg>
+        The central model
+      </p>
+      <h2>The four areas of the scenario space</h2>
+      <p class="lede">
+        Every scenario the vehicle can meet is either known to you or not, and either hazardous
+        or not. The whole SOTIF programme is a campaign to move area by area.
+      </p>
+    </div>
+
+    <div class="quad reveal">
+      <div class="quad__cell quad__cell--1">
+        <span class="quad__tag">Area 1 · Known &amp; safe</span>
+        <h4>Known, not hazardous</h4>
+        <p>
+          Scenarios you have identified and in which the function behaves acceptably. This is the
+          area you want to grow — and the area your validation evidence actually demonstrates.
+        </p>
+      </div>
+      <div class="quad__cell quad__cell--2">
+        <span class="quad__tag">Area 2 · Known &amp; hazardous</span>
+        <h4>Known, hazardous</h4>
+        <p>
+          You know the function fails here. Engineering response: improve the function, add a
+          degradation or fallback, or cut the scenario out of the ODD. Every item here must be
+          closed or explicitly accepted.
+        </p>
+      </div>
+      <div class="quad__cell quad__cell--3">
+        <span class="quad__tag">Area 3 · Unknown &amp; hazardous</span>
+        <h4>Unknown, hazardous</h4>
+        <p>
+          The dangerous quadrant. Failures you have not met yet. You cannot enumerate them, so
+          the argument has to be statistical, structural and continuous — coverage rationale,
+          architectural containment, and field monitoring that keeps converting Area 3 into
+          Area 2.
+        </p>
+      </div>
+      <div class="quad__cell quad__cell--4">
+        <span class="quad__tag">Area 4 · Unknown &amp; safe</span>
+        <h4>Unknown, not hazardous</h4>
+        <p>
+          Scenarios you have not characterised in which the function happens to cope. Harmless,
+          but not evidence — you cannot claim credit for behaviour you have not observed.
+        </p>
+      </div>
+    </div>
+
+    <div class="callout callout--cyan reveal" style="margin-top:1.6rem">
+      <p>
+        <strong>The acceptance question.</strong> SOTIF does not ask you to eliminate Area 3 —
+        that is impossible. It asks you to argue that what remains is small enough, and to state
+        the criterion you are judging "small enough" against, before you start testing. Programmes
+        that leave the acceptance criterion until validation almost always discover they have been
+        collecting the wrong data for a year.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="section">
+  <div class="container">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6V2Zm8 1.5V8h4.5L14 3.5ZM8 12h8v1.6H8V12Zm0 4h8v1.6H8V16Z"/></svg>
+          Deliverables
+        </p>
+        <h2>What we deliver</h2>
+        <p class="lede">
+          A SOTIF programme is only as good as its scenario evidence. We build the chain from
+          ODD to catalogue to coverage claim so it holds together under scrutiny.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="automotive.html#contact">Review your scenario strategy</a>
+        </div>
+      </div>
+
+      <ul class="deliver reveal">
+        <li><span>01</span><div><strong>ODD specification.</strong> A structured, machine-readable operational design domain — scenery, environmental conditions, dynamic elements — with explicit exit conditions and boundary behaviour.</div></li>
+        <li><span>02</span><div><strong>Functional insufficiency analysis.</strong> Systematic decomposition of the sense–plan–act chain into performance limitations, with their contribution to each safety goal made explicit.</div></li>
+        <li><span>03</span><div><strong>Triggering condition catalogue.</strong> Identified, prioritised and traced to the insufficiency they activate — plus the method by which you will keep finding new ones.</div></li>
+        <li><span>04</span><div><strong>Acceptance criteria.</strong> A defensible quantitative target with its rationale: comparative risk, positive risk balance, exposure-based reasoning — chosen deliberately, not inherited.</div></li>
+        <li><span>05</span><div><strong>Scenario catalogue &amp; coverage argument.</strong> Logical and concrete scenarios derived from the ODD, with the parameter space, sampling strategy and the coverage claim they support.</div></li>
+        <li><span>06</span><div><strong>V&amp;V strategy.</strong> The allocation across simulation, hardware-in-the-loop, proving ground and public road — with what each one is and is not capable of proving.</div></li>
+        <li><span>07</span><div><strong>Field monitoring concept.</strong> The operational feedback loop: what to log, what constitutes a SOTIF-relevant event, and how findings re-enter the analysis.</div></li>
+        <li><span>08</span><div><strong>SOTIF argument &amp; report.</strong> The residual risk statement, the evidence behind it, and the assumptions it depends on — written for an assessor.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNALS -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v5.3l4 2.4-.9 1.5-5.1-3V7h2Z"/></svg>
+        Signals
+      </p>
+      <h2>You probably need this if…</h2>
+    </div>
+    <div class="grid grid-2">
+      <div class="frame reveal">
+        <div class="card">
+          <ul class="checks">
+            <li>Your validation plan is measured in kilometres rather than in scenarios covered.</li>
+            <li>Your ODD exists as prose in a slide deck rather than as a structured, testable specification.</li>
+            <li>Nobody can state the acceptance criterion the programme is being validated against.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="frame reveal" data-delay="90">
+        <div class="card">
+          <ul class="checks">
+            <li>Perception issues are tracked in a defect system as bugs, with no distinction between fault and insufficiency.</li>
+            <li>Foreseeable misuse has never been analysed, and your HMI assumes an attentive user.</li>
+            <li>Field data is collected but there is no defined trigger for what counts as a SOTIF-relevant event.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECTIONS -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7h-4V5h4a5 5 0 0 1 0 10h-4v-2h4a3 3 0 0 0 0-6Zm-6 8H7a3 3 0 0 1 0-6h4V7H7a5 5 0 0 0 0 10h4v-2Zm-3-5h8v2H8v-2Z"/></svg>
+        Connections
+      </p>
+      <h2>How this connects to the other two</h2>
+      <p class="lede">
+        SOTIF sits in the middle. It inherits its hazards from functional safety and delegates
+        much of its hardest evidence to the AI branch.
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+      <a class="frame reveal" href="service-iso-26262.html">
+        <article class="card">
+          <span class="tag">Upstream</span>
+          <h3 style="margin-top:1.1rem">← ISO 26262 supplies the hazards and the goals</h3>
+          <p>
+            The HARA is shared. SOTIF should not produce its own hazard list — it should take the
+            existing safety goals and ask what threatens them when the fault assumption is
+            removed. Where a SOTIF countermeasure is implemented in E/E hardware or software, that
+            implementation goes straight back into the ISO 26262 lifecycle at the right ASIL.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore ISO 26262
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+
+      <a class="frame reveal" href="service-safe-ai.html" data-delay="90">
+        <article class="card">
+          <span class="tag">Downstream</span>
+          <h3 style="margin-top:1.1rem">→ ISO/PAS 8800 explains where the insufficiency came from</h3>
+          <p>
+            SOTIF says "the perception function under-performs in this triggering condition."
+            It does not say why, and it offers little guidance on how to develop the component so
+            it does not. When the component is learned, ISO/PAS 8800 supplies the dataset,
+            training and evaluation evidence that closes the loop from symptom to root cause.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore Safe AI
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+    </div>
+
+    <div class="btn-row reveal" style="justify-content:center">
+      <a class="btn btn--ghost" href="services.html">See the full hazard ecosystem</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band cut reveal">
+      <h2>How big is your Area 3?</h2>
+      <p class="lede center">
+        If the honest answer is "we don't know", that is the engagement — and it is a better
+        starting point than most.
+      </p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--primary" href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a>
+        <a class="btn btn--ghost" href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="index.html">
+          <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+          <span class="logo__text">safe<span>autonomy</span></span>
+        </a>
+        <p class="footer__blurb">
+          Bridging ISO 26262, ISO 21448 and ISO/PAS 8800 into one defensible safety argument
+          for automated driving.
+        </p>
+        <p style="margin-top:1rem"><a href="robotics.html" style="font-family:var(--font-head);font-weight:700;font-size:.85rem;color:var(--muted)">Looking for robotics? →</a></p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Overview</a></li>
+          <li><a href="service-iso-26262.html">ISO 26262</a></li>
+          <li><a href="service-sotif.html">SOTIF — ISO 21448</a></li>
+          <li><a href="service-safe-ai.html">Safe AI — ISO/PAS 8800</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="automotive.html#about">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="automotive.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a></li>
+          <li><a href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a></li>
+          <li><a href="https://www.linkedin.com/in/dr-simon-saim-perveen-5b797918a/">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; <span data-year>2026</span> safeautonomy. All rights reserved.</p>
+      <p>ISO 26262 · ISO 21448 · ISO/PAS 8800 · AFGBV</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

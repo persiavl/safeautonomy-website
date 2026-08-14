@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Services — one hazard ecosystem, three standards | safeautonomy</title>
+<meta name="description" content="How ISO 26262, ISO 21448 (SOTIF) and ISO/PAS 8800 differ, why each matters, and how they combine into a single hazard ecosystem and one safety argument.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2329D3D8' d='M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="index.html">
+      <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+      <span class="logo__text">safe<span>autonomy</span></span>
+    </a>
+    <button class="burger" aria-label="Toggle navigation" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+    </button>
+    <nav class="nav" aria-label="Main">
+      <div class="domain-switch" role="group" aria-label="Choose industry">
+        <a href="automotive.html" class="is-active">Automotive</a>
+        <a href="robotics.html">Robotics</a>
+      </div>
+      <a class="nav__link" href="automotive.html" data-nav="automotive.html">Home</a>
+      <div class="nav__item">
+        <a class="nav__link nav__toggle" href="services.html" data-nav="services.html service-iso-26262.html service-sotif.html service-safe-ai.html" aria-expanded="false" aria-haspopup="true">
+          Services <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 4l5 5 5-5z"/></svg>
+        </a>
+        <div class="nav__menu">
+          <a href="services.html">Services overview<small>How the standards form one hazard ecosystem</small></a>
+          <a href="service-iso-26262.html">ISO 26262<small>Functional safety of E/E systems</small></a>
+          <a href="service-sotif.html">ISO 21448 — SOTIF<small>Safety of the intended functionality</small></a>
+          <a href="service-safe-ai.html">Safe AI — ISO/PAS 8800<small>Safety assurance for machine learning</small></a>
+        </div>
+      </div>
+      <a class="nav__link" href="blog.html" data-nav="blog.html">Blog</a>
+      <a class="nav__link" href="automotive.html#about">About</a>
+      <div class="nav__cta"><a class="btn btn--primary" href="automotive.html#contact">Talk to us</a></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero hero--page">
+  <div class="hero__media">
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="assets/video/hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="arcs arcs--br" aria-hidden="true"></div>
+
+  <div class="container hero__inner">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="automotive.html">Home</a> <span>/</span> <span>Services</span>
+    </nav>
+    <p class="eyebrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8v8H3V3Zm10 0h8v8h-8V3ZM3 13h8v8H3v-8Zm10 0h8v8h-8v-8Z"/></svg>
+      Services
+    </p>
+    <h1>One hazard ecosystem</h1>
+    <p class="hero__sub">
+      ISO 26262, ISO 21448 and ISO/PAS 8800 are not three competing rulebooks. They are three
+      views of the same question — <em style="color:var(--lime);font-style:normal">can this vehicle hurt someone, and how do we know?</em>
+      Here is what each one actually covers, where the boundaries sit, and why the boundaries
+      are the dangerous part.
+    </p>
+  </div>
+</section>
+
+<!-- ============ THREE QUESTIONS ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm.9 15.5h-1.8v-1.8h1.8v1.8Zm1.9-6.9-.8.8c-.6.7-1 1.2-1 2.6h-1.8v-.4c0-1 .4-1.9 1-2.6l1.2-1.2c.3-.3.5-.8.5-1.3a2 2 0 0 0-4 0H8.1a3.9 3.9 0 1 1 7.8 0c0 .8-.3 1.5-.9 2.1Z"/></svg>
+        Start here
+      </p>
+      <h2>Each standard answers a different question</h2>
+      <p class="lede">
+        The fastest way to know which framework applies is to ask what has to go wrong for a
+        person to be harmed. The three answers below are mutually exclusive as causes — and
+        jointly exhaustive as an argument.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="frame reveal">
+        <article class="card">
+          <span class="tag">ISO 26262</span>
+          <h3 style="margin-top:1.1rem">"Does it fail dangerously?"</h3>
+          <p>
+            Something in the electrical/electronic system <strong>breaks or was built wrong</strong>
+            — a random hardware fault, a systematic design fault, a software defect — and the
+            resulting malfunctioning behaviour leads to a hazard.
+          </p>
+          <p style="margin-top:.9rem">
+            The system is <strong>faulted</strong>. Remove the fault and the hazard disappears.
+          </p>
+        </article>
+      </div>
+
+      <div class="frame reveal" data-delay="90">
+        <article class="card">
+          <span class="tag tag--lime">ISO 21448 — SOTIF</span>
+          <h3 style="margin-top:1.1rem">"Is it good enough when nothing fails?"</h3>
+          <p>
+            Nothing is broken. Every requirement is met. The function is simply
+            <strong>not capable enough</strong> for the situation it meets — or a person uses
+            it in a way that was foreseeable but not designed for.
+          </p>
+          <p style="margin-top:.9rem">
+            The system is <strong>fault-free</strong>. You cannot debug your way out; you have
+            to improve the function or restrict its operational domain.
+          </p>
+        </article>
+      </div>
+
+      <div class="frame reveal" data-delay="180">
+        <article class="card">
+          <span class="tag">ISO/PAS 8800</span>
+          <h3 style="margin-top:1.1rem">"Can the AI inside it be trusted?"</h3>
+          <p>
+            The insufficiency exists because a component was <strong>learned rather than
+            written</strong>. Its behaviour comes from data, an optimisation process and an
+            architecture — none of which can be reviewed clause by clause.
+          </p>
+          <p style="margin-top:.9rem">
+            The system is fault-free and the function was well specified, but the
+            <strong>evidence model</strong> from the other two standards does not fit.
+          </p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARISON TABLE ============ -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v2H3V4Zm0 5h18v2H3V9Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/></svg>
+        Side by side
+      </p>
+      <h2>The difference, in one table</h2>
+      <p class="lede">
+        Print this and put it on the wall. Most cross-team arguments about "whose finding is
+        this?" are resolved by the second row.
+      </p>
+    </div>
+
+    <div class="table-wrap reveal">
+      <table>
+        <caption class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">
+          Comparison of ISO 26262, ISO 21448 and ISO/PAS 8800
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Dimension</th>
+            <th scope="col">ISO 26262 <span>Functional safety</span></th>
+            <th scope="col">ISO 21448 <span>SOTIF</span></th>
+            <th scope="col">ISO/PAS 8800 <span>Safety and AI</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Question answered</th>
+            <td>Does the system fail dangerously?</td>
+            <td>Is the system good enough when nothing fails?</td>
+            <td>Is the learned component trustworthy enough to carry a safety role?</td>
+          </tr>
+          <tr>
+            <th scope="row">Cause of the hazard</th>
+            <td>Malfunctioning behaviour of E/E systems — random hardware faults and systematic faults in hardware and software</td>
+            <td>Functional insufficiencies of the intended functionality, and reasonably foreseeable misuse by persons</td>
+            <td>Insufficiencies rooted in data, training, model architecture, generalisation and distributional shift</td>
+          </tr>
+          <tr>
+            <th scope="row">System state</th>
+            <td>Faulted</td>
+            <td>Fault-free</td>
+            <td>Fault-free, correctly implemented — but statistically derived</td>
+          </tr>
+          <tr>
+            <th scope="row">Risk classification</th>
+            <td>ASIL A–D from severity, exposure and controllability</td>
+            <td>Scenario space split into known/unknown &times; safe/unsafe (Areas 1–4); goal is to shrink Areas 2 and 3</td>
+            <td>AI safety requirements derived from the allocated safety goals, with performance and robustness targets per ML property</td>
+          </tr>
+          <tr>
+            <th scope="row">Core technique</th>
+            <td>Safety mechanisms, diagnostic coverage, freedom from interference, dependent failure analysis</td>
+            <td>Triggering condition analysis, ODD definition, scenario-based verification and validation, functional modification</td>
+            <td>Dataset specification and coverage, training and evaluation rigour, uncertainty estimation, out-of-distribution detection, runtime monitoring</td>
+          </tr>
+          <tr>
+            <th scope="row">Central evidence</th>
+            <td>Hardware architectural metrics (SPFM, LFM, PMHF), systematic capability, verification reports</td>
+            <td>Residual risk in the unknown-hazardous scenario space against defined acceptance criteria</td>
+            <td>Quantified model performance and its insufficiencies, traced to the data and the operational domain</td>
+          </tr>
+          <tr>
+            <th scope="row">Typical failure it catches</th>
+            <td>A stuck-at fault in a sensor interface commands unintended braking</td>
+            <td>Perception under-performs against low sun, spray or an unusual object pose — no component is faulty</td>
+            <td>A pedestrian class collapses for an under-represented appearance because the dataset never contained it</td>
+          </tr>
+          <tr>
+            <th scope="row">Primary artefact</th>
+            <td>Item safety case, safety plan, FSC/TSC, confirmation measure reports</td>
+            <td>SOTIF argument, scenario catalogue, validation strategy and acceptance rationale</td>
+            <td>AI safety case for the component, dataset and model documentation, monitoring concept</td>
+          </tr>
+          <tr>
+            <th scope="row">When it applies</th>
+            <td>Any safety-related E/E system in a road vehicle</td>
+            <td>Any function that senses, interprets or decides under uncertainty — ADAS and automated driving above all</td>
+            <td>Any AI/ML component that contributes to a safety-related function</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:.86rem;color:var(--muted-2);margin-top:.9rem">Scroll the table horizontally on narrow screens.</p>
+  </div>
+</section>
+
+<!-- ============ WHY IT MATTERS ============ -->
+<section class="section">
+  <div class="container">
+    <div class="split">
+      <div class="sticky reveal">
+        <p class="eyebrow eyebrow--lime">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 2 20h20L12 2Zm0 5 6.2 11H5.8L12 7Z"/></svg>
+          Why it matters
+        </p>
+        <h2>Why three standards had to exist</h2>
+        <p class="lede">
+          Each one was written because the previous one had run out of road. The history is
+          not trivia — it tells you exactly what each framework is blind to.
+        </p>
+        <div class="stats" style="margin-top:2rem">
+          <div class="stat"><p class="stat__k">2011</p><p class="stat__l">ISO 26262 first edition — second edition 2018</p></div>
+          <div class="stat"><p class="stat__k">2022</p><p class="stat__l">ISO 21448 published as a full standard</p></div>
+          <div class="stat"><p class="stat__k">2024</p><p class="stat__l">ISO/PAS 8800 published for safety and AI</p></div>
+        </div>
+      </div>
+
+      <div class="prose reveal">
+        <h3>ISO 26262 assumed you could specify the right behaviour</h3>
+        <p>
+          Functional safety rests on a quiet assumption: that the correct behaviour of the item
+          is known, and the only problem is making the electronics deliver it reliably. For an
+          airbag controller or an electric power steering ECU, that assumption holds. The
+          specification is short, the environment is bounded, and "correct" is unambiguous.
+        </p>
+        <p>
+          Automated driving broke the assumption. When the item has to decide whether a shape at
+          80&nbsp;metres is a stopped vehicle or an overhead sign, the hard part is no longer
+          delivering the specified behaviour — it is knowing what the specified behaviour should be.
+          A perfectly fault-free implementation of an insufficient specification is still a hazard,
+          and ISO 26262 has no clause for it.
+        </p>
+
+        <h3>ISO 21448 named the gap: insufficiency, not fault</h3>
+        <p>
+          SOTIF took the hazards that remain when nothing is broken and gave them a structure.
+          Its central move is to stop reasoning about components and start reasoning about
+          <strong>scenarios</strong>: the known-safe ones, the known-unsafe ones you must engineer
+          away, and — the hard part — the unknown-unsafe ones you have not met yet.
+        </p>
+        <p>
+          The corresponding concept is the <strong>triggering condition</strong>: the specific
+          circumstance that activates a latent insufficiency. Low sun at a particular elevation.
+          A cyclist carrying a large flat object. Retro-reflective road works markings. None of
+          these are faults. All of them are hazards.
+        </p>
+        <div class="callout">
+          <p>
+            <strong>The practical consequence.</strong> Under ISO 26262 you reduce risk by adding
+            safety mechanisms. Under SOTIF you reduce risk by improving the function, restricting
+            the operational design domain, or proving the residual unknown space is small enough
+            to accept. These are entirely different engineering programmes with different budgets.
+          </p>
+        </div>
+
+        <h3>ISO/PAS 8800 addressed how the insufficiency gets in</h3>
+        <p>
+          SOTIF tells you that insufficiencies exist and must be bounded. It does not tell you
+          how to develop, evaluate and argue about a component whose behaviour was <em>learned</em>.
+          That is the gap ISO/PAS 8800 fills: an AI safety lifecycle that sits alongside the
+          existing ones and produces evidence the other two standards can consume.
+        </p>
+        <p>
+          It covers the things that decide whether a machine-learned function is safe long before
+          anyone runs a scenario test — how the dataset was specified and shown to cover the ODD,
+          how training and evaluation were separated, how performance degrades at the edges of the
+          distribution, how the system detects that it is out of distribution at runtime, and what
+          architectural measures contain a wrong answer when one is produced anyway.
+        </p>
+
+        <h3>And then the law arrives</h3>
+        <p>
+          None of this is optional once you want to operate. Germany's autonomous driving act
+          (StVG §1d–1l) and the implementing <strong>AFGBV</strong> ordinance allow SAE Level 4
+          vehicles to operate in a defined operational area — but demand a technical supervisor,
+          a demonstrable risk-minimal state, data recording, independent technical assessment and
+          a dossier the KBA will accept. At UNECE level, R157 and its successors do the same for
+          type approval. The EU AI Act adds obligations on data governance, logging and human
+          oversight for AI in safety components.
+        </p>
+        <p>
+          The regulator does not receive three standards. It receives one argument. If your
+          evidence is organised by standard rather than by hazard, you will spend the last three
+          months of the programme re-organising it under time pressure.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE ECOSYSTEM ============ -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head center reveal">
+      <p class="eyebrow">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 3.5A6.5 6.5 0 0 1 18.5 12H12V5.5Z"/></svg>
+        The ecosystem
+      </p>
+      <h2>How they combine into one hazard ecosystem</h2>
+      <p class="lede">
+        There is only ever one hazard list. The standards do not partition the vehicle — they
+        partition the <strong>causes</strong>. That single idea is what makes an integrated
+        safety argument possible.
+      </p>
+    </div>
+
+    <div class="eco reveal">
+      <div class="eco__cap eco__cap--hazard">
+        Step 1 &nbsp;·&nbsp; One hazard analysis and risk assessment
+        <small>Item definition and ODD → hazardous events → safety goals. Performed once, jointly, not three times in three teams.</small>
+      </div>
+
+      <div class="eco__flow" aria-hidden="true">
+        <div class="eco__arrow eco__arrow--down"><svg viewBox="0 0 12 12"><path d="M6 11 1 5h10z"/></svg></div>
+        <div class="eco__arrow eco__arrow--down"><svg viewBox="0 0 12 12"><path d="M6 11 1 5h10z"/></svg></div>
+        <div class="eco__arrow eco__arrow--down"><svg viewBox="0 0 12 12"><path d="M6 11 1 5h10z"/></svg></div>
+      </div>
+
+      <div class="eco__cols">
+        <div class="eco__col">
+          <span class="eco__std">Branch A · ISO 26262</span>
+          <h4>Fault-driven causes</h4>
+          <p>
+            Each safety goal gets an ASIL. Safety mechanisms, diagnostics and architectural
+            measures reduce the probability that a fault produces the hazard.
+          </p>
+        </div>
+        <div class="eco__col">
+          <span class="eco__std">Branch B · ISO 21448</span>
+          <h4>Insufficiency-driven causes</h4>
+          <p>
+            The same safety goals are re-examined assuming zero faults. Triggering conditions,
+            ODD limits and scenario coverage bound the performance risk.
+          </p>
+        </div>
+        <div class="eco__col">
+          <span class="eco__std">Branch C · ISO/PAS 8800</span>
+          <h4>AI-driven causes</h4>
+          <p>
+            Where a branch-B insufficiency lives inside a learned component, 8800 supplies the
+            lifecycle and the evidence that branch B assumes exists.
+          </p>
+        </div>
+      </div>
+
+      <div class="eco__flow" aria-hidden="true">
+        <div class="eco__arrow"><svg viewBox="0 0 12 12"><path d="M6 1 1 7h10z"/></svg></div>
+        <div class="eco__arrow"><svg viewBox="0 0 12 12"><path d="M6 1 1 7h10z"/></svg></div>
+        <div class="eco__arrow"><svg viewBox="0 0 12 12"><path d="M6 1 1 7h10z"/></svg></div>
+      </div>
+
+      <div class="eco__cap">
+        Step 2 &nbsp;·&nbsp; One integrated safety case
+        <small>Every safety goal carries all three branches of evidence, with an explicit statement of what remains unproven.</small>
+      </div>
+
+      <div class="eco__flow" aria-hidden="true" style="grid-template-columns:1fr">
+        <div class="eco__arrow"><svg viewBox="0 0 12 12"><path d="M6 1 1 7h10z"/></svg></div>
+      </div>
+
+      <div class="eco__cap eco__cap--case">
+        Step 3 &nbsp;·&nbsp; Approval and operation
+        <small>AFGBV / StVG for L4 operation in Germany · UNECE type approval · ISO 21434 security case · EU AI Act obligations · field monitoring feeding back into step 1.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE SEAMS ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7h-4V5h4a5 5 0 0 1 0 10h-4v-2h4a3 3 0 0 0 0-6Zm-6 8H7a3 3 0 0 1 0-6h4V7H7a5 5 0 0 0 0 10h4v-2Zm-3-5h8v2H8v-2Z"/></svg>
+        The seams
+      </p>
+      <h2>Three places where real programmes leak</h2>
+      <p class="lede">
+        In our experience the findings that hurt most are never inside one standard. They sit
+        exactly on the boundary, where each team assumes the other one owns it.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="frame reveal">
+        <article class="card">
+          <p class="card__num">Seam 01</p>
+          <h3>26262 &nbsp;↔&nbsp; SOTIF</h3>
+          <p>
+            A safety mechanism is implemented to ASIL D and verified perfectly — against a
+            requirement that was itself insufficient. Functional safety confirms the
+            implementation; nobody confirms the intent.
+          </p>
+          <p style="margin-top:.9rem;color:var(--text)">
+            <strong>Fix:</strong> derive SOTIF-relevant requirements from the same safety goals
+            and trace them in the same requirement baseline, not in a parallel document set.
+          </p>
+        </article>
+      </div>
+
+      <div class="frame reveal" data-delay="90">
+        <article class="card">
+          <p class="card__num">Seam 02</p>
+          <h3>SOTIF &nbsp;↔&nbsp; 8800</h3>
+          <p>
+            A triggering condition is logged as an environmental edge case when it is really a
+            dataset gap. The team responds with more road testing instead of a dataset change,
+            and the same failure returns two releases later.
+          </p>
+          <p style="margin-top:.9rem;color:var(--text)">
+            <strong>Fix:</strong> classify every triggering condition by whether its root cause is
+            sensing physics, specification, or the training distribution — and route it accordingly.
+          </p>
+        </article>
+      </div>
+
+      <div class="frame reveal" data-delay="180">
+        <article class="card">
+          <p class="card__num">Seam 03</p>
+          <h3>8800 &nbsp;↔&nbsp; 26262</h3>
+          <p>
+            The model is evaluated thoroughly, on hardware whose fault behaviour was never
+            analysed for it. Accelerator memory faults, quantisation and non-deterministic
+            scheduling all sit outside the ML evaluation and outside the classic FMEDA.
+          </p>
+          <p style="margin-top:.9rem;color:var(--text)">
+            <strong>Fix:</strong> treat the inference platform as part of the item, with dependent
+            failure analysis that includes the model's sensitivity to corrupted computation.
+          </p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICE LINES ============ -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8v8H3V3Zm10 0h8v8h-8V3ZM3 13h8v8H3v-8Zm10 0h8v8h-8v-8Z"/></svg>
+        Practice areas
+      </p>
+      <h2>Where we come in</h2>
+      <p class="lede">
+        Each practice can be engaged on its own. All of them are written to land in the same
+        safety case.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+      <a class="frame reveal" href="service-iso-26262.html">
+        <article class="card">
+          <p class="card__num">01 / Functional safety</p>
+          <h3>ISO 26262</h3>
+          <p>
+            Item definition, HARA and ASIL determination, functional and technical safety concepts,
+            hardware and software safety requirements, confirmation measures and the safety case.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore ISO 26262
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+
+      <a class="frame reveal" href="service-sotif.html" data-delay="90">
+        <article class="card">
+          <p class="card__num">02 / Intended functionality</p>
+          <h3>SOTIF — ISO 21448</h3>
+          <p>
+            ODD specification, triggering condition analysis, the Area 1–4 scenario space,
+            acceptance criteria, scenario-based V&amp;V strategy and field monitoring.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore SOTIF
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+
+      <a class="frame reveal" href="service-safe-ai.html" data-delay="180">
+        <article class="card">
+          <p class="card__num">03 / Artificial intelligence</p>
+          <h3>Safe AI — ISO/PAS 8800</h3>
+          <p>
+            AI safety lifecycle, dataset specification and coverage, model safety requirements,
+            robustness and OOD evidence, runtime monitoring and the AI safety argument.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore Safe AI
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CROSS-CUTTING ============ -->
+<section class="section">
+  <div class="container">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow eyebrow--lime">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Z"/></svg>
+          Cross-cutting
+        </p>
+        <h2>Work that spans all three</h2>
+        <p class="lede">
+          The integration itself is a deliverable. These engagements are what turn three
+          conformant workstreams into one argument.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="automotive.html#contact">Scope an engagement</a>
+        </div>
+      </div>
+
+      <ul class="deliver reveal">
+        <li><span>A</span><div><strong>Integrated safety case architecture.</strong> A goal-structured argument spanning functional safety, SOTIF and AI evidence, with explicit context and residual risk claims.</div></li>
+        <li><span>B</span><div><strong>Joint HARA &amp; SOTIF hazard workshops.</strong> One hazard list, three causal branches, facilitated with your system, perception and validation teams in the room together.</div></li>
+        <li><span>C</span><div><strong>ODD and scenario strategy.</strong> A machine-readable operational design domain, a scenario catalogue derived from it, and a defensible coverage argument.</div></li>
+        <li><span>D</span><div><strong>V&amp;V strategy and acceptance criteria.</strong> What each simulation, proving ground and field test actually proves — and what claim survives when it passes.</div></li>
+        <li><span>E</span><div><strong>Safety management and DIA.</strong> Safety plans, interface agreements with suppliers, tool qualification and confirmation measure planning.</div></li>
+        <li><span>F</span><div><strong>Assessment and approval readiness.</strong> Independent review before the assessor arrives, plus support through AFGBV and type approval submissions.</div></li>
+        <li><span>G</span><div><strong>Training.</strong> Practitioner-level courses on ISO 26262, SOTIF and safety for machine learning, taught against your own architecture rather than generic examples.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band cut reveal">
+      <h2>Which branch is your programme missing?</h2>
+      <p class="lede center">
+        Most teams we meet are strong in one branch, competent in the second, and have never
+        written the third down. Let's find out which is which.
+      </p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--primary" href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a>
+        <a class="btn btn--ghost" href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="index.html">
+          <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+          <span class="logo__text">safe<span>autonomy</span></span>
+        </a>
+        <p class="footer__blurb">
+          Bridging ISO 26262, ISO 21448 and ISO/PAS 8800 into one defensible safety argument
+          for automated driving.
+        </p>
+        <p style="margin-top:1rem"><a href="robotics.html" style="font-family:var(--font-head);font-weight:700;font-size:.85rem;color:var(--muted)">Looking for robotics? →</a></p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Overview</a></li>
+          <li><a href="service-iso-26262.html">ISO 26262</a></li>
+          <li><a href="service-sotif.html">SOTIF — ISO 21448</a></li>
+          <li><a href="service-safe-ai.html">Safe AI — ISO/PAS 8800</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="automotive.html#about">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="automotive.html#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a></li>
+          <li><a href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a></li>
+          <li><a href="https://www.linkedin.com/in/dr-simon-saim-perveen-5b797918a/">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; <span data-year>2026</span> safeautonomy. All rights reserved.</p>
+      <p>ISO 26262 · ISO 21448 · ISO/PAS 8800 · AFGBV</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

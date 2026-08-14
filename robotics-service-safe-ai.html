@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Safe AI — ISO/IEC TR 5469, TS 22440 &amp; TS 25223 consulting | safeautonomy</title>
+<meta name="description" content="AI safety consulting for robotics: ISO/IEC TR 5469 guidance, the emerging TS 22440 specification and TS 25223 uncertainty quantification — dataset specification, model evaluation, runtime monitoring and the AI safety case.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2329D3D8' d='M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+  .hero--robotics .hero__media::after {
+    background:
+      linear-gradient(90deg, rgba(8,15,22,.9) 0%, rgba(8,15,22,.72) 45%, rgba(8,15,22,.38) 100%),
+      linear-gradient(0deg, var(--bg) 2%, rgba(8,15,22,.2) 45%, rgba(8,15,22,.7) 100%),
+      radial-gradient(ellipse 65% 60% at 22% 30%, rgba(124,107,240,.20), transparent 70%);
+  }
+
+  /* AI lifecycle rail — used only on this page */
+  .rail { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); counter-reset: r; }
+  .rail__row {
+    background: var(--bg-1); padding: 1.5rem 1.6rem;
+    display: grid; grid-template-columns: 150px 1fr; gap: 1.6rem; align-items: start;
+    transition: background .25s var(--ease);
+  }
+  .rail__row:hover { background: var(--bg-2); }
+  .rail__k {
+    font-family: var(--font-head); font-size: .74rem; font-weight: 700;
+    letter-spacing: .13em; text-transform: uppercase; color: #9C8DFF; padding-top: .18rem;
+  }
+  .rail__row h4 { margin-bottom: .4rem; font-size: 1.02rem; }
+  .rail__row p { margin: 0; font-size: .93rem; color: var(--muted); }
+  @media (max-width: 800px) { .rail__row { grid-template-columns: 1fr; gap: .6rem; } }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="index.html">
+      <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+      <span class="logo__text">safe<span>autonomy</span></span>
+    </a>
+    <button class="burger" aria-label="Toggle navigation" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+    </button>
+    <nav class="nav" aria-label="Main">
+      <div class="domain-switch" role="group" aria-label="Choose industry">
+        <a href="automotive.html">Automotive</a>
+        <a href="robotics.html" class="is-active">Robotics</a>
+      </div>
+      <a class="nav__link" href="robotics.html" data-nav="robotics.html">Home</a>
+      <div class="nav__item">
+        <a class="nav__link nav__toggle" href="robotics-services.html" data-nav="robotics-services.html robotics-service-functional-safety.html robotics-service-safe-ai.html robotics-service-autonomy-certification.html" aria-expanded="false" aria-haspopup="true">
+          Services <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 4l5 5 5-5z"/></svg>
+        </a>
+        <div class="nav__menu">
+          <a href="robotics-services.html">Services overview<small>How the standards form one hazard ecosystem</small></a>
+          <a href="robotics-service-functional-safety.html">Functional safety<small>IEC 61508 for E/E/PE safety-related systems</small></a>
+          <a href="robotics-service-safe-ai.html">Safe AI<small>ISO/IEC TR 5469 · TS 22440 · TS 25223</small></a>
+          <a href="robotics-service-autonomy-certification.html">Autonomy certification<small>UL 4600 · UL 3115</small></a>
+        </div>
+      </div>
+      <a class="nav__link" href="robotics-blog.html" data-nav="robotics-blog.html">Blog</a>
+      <a class="nav__link" href="robotics.html#about">About</a>
+      <div class="nav__cta"><a class="btn btn--primary" href="robotics.html#contact">Talk to us</a></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero hero--page hero--robotics">
+  <div class="hero__media">
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="assets/video/robotics-hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="arcs arcs--br" aria-hidden="true"></div>
+  <div class="container hero__inner">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="robotics.html">Home</a> <span>/</span> <a href="robotics-services.html">Services</a> <span>/</span> <span>Safe AI</span>
+    </nav>
+    <p class="eyebrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6v2.2a7 7 0 0 1 4.8 4.8H22v6h-2.2A7 7 0 0 1 15 20.8V23H9v-2.2a7 7 0 0 1-4.8-4.8H2v-6h2.2A7 7 0 0 1 9 5.2V3Zm3 5.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z"/></svg>
+      Practice 02 · Artificial intelligence
+    </p>
+    <h1>Safe AI</h1>
+    <p class="hero__sub">
+      ISO/IEC TR 5469 · TS 22440 · TS 25223. You cannot review a neural network line by
+      line, and you cannot test your way to confidence one scenario at a time. This is the
+      standards family for arguing that a learned component is safe enough — with evidence
+      the rest of the safety case can actually use.
+    </p>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="section">
+  <div class="container">
+    <div class="split">
+      <div class="sticky reveal">
+        <p class="eyebrow eyebrow--lime">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v2H4V4Zm0 5h16v2H4V9Zm0 5h10v2H4v-2Z"/></svg>
+          Scope
+        </p>
+        <h2>Why IEC 61508 alone was not enough</h2>
+        <p class="lede">
+          This family addresses safety for AI within robotic and autonomous systems: the
+          lifecycle, the evidence and the argument for components whose behaviour is
+          <strong>learned from data</strong> rather than written as code.
+        </p>
+        <div class="callout callout--cyan">
+          <p>
+            <strong>It does not replace anything.</strong> It is designed to plug into
+            IEC&nbsp;61508 and UL&nbsp;4600/3115 — supplying the component-level evidence
+            they both assume somebody else is producing.
+          </p>
+        </div>
+      </div>
+
+      <div class="prose reveal">
+        <h3>The safety lifecycle has no rung for a trained model</h3>
+        <p>
+          IEC&nbsp;61508-3 is built on a chain of specification, design, implementation and
+          verification, each reviewable against the one above. For a trained network, the
+          middle of that chain does not exist. There is no line of code implementing
+          "grasp the object correctly given this point cloud"; there is a weight tensor
+          produced by an optimisation process over a dataset. Structural coverage of the
+          inference code tells you almost nothing about whether the function is correct.
+        </p>
+        <p>
+          UL&nbsp;4600 is closer, because a safety case already accepts that a function will
+          be imperfect and reasons in terms of claims and evidence. But on its own it treats
+          the AI component as a black box with observed performance — it does not tell you
+          how to build a better box or what evidence is actually worth citing.
+        </p>
+
+        <h3>What the AI-safety family adds</h3>
+        <p>
+          The specification moves the argument upstream, to the things that determine model
+          behaviour before any test is ever run:
+        </p>
+        <ul>
+          <li><strong>AI safety requirements</strong> derived from the allocated safety functions and expressed in terms the model development can actually satisfy and measure.</li>
+          <li><strong>Data as a safety artefact</strong> — a dataset specification tied to the task envelope, with coverage, representativeness, quality and bias treated as verifiable properties rather than data-science hygiene.</li>
+          <li><strong>Development and evaluation rigour</strong> — separation of training, validation and test data, control of leakage, evaluation against the operational distribution rather than a convenient benchmark.</li>
+          <li><strong>Insufficiency identification for ML</strong> — distributional shift, spurious correlation, brittle generalisation, degradation at the edges of the task envelope.</li>
+          <li><strong>Calibrated uncertainty</strong> — whether the model's confidence actually means what it claims to mean, and what the system does when confidence is low.</li>
+          <li><strong>The AI safety argument</strong> — the structured case that residual model insufficiency is bounded and acceptable, ready to be consumed by the item-level safety case.</li>
+        </ul>
+
+        <div class="callout">
+          <p>
+            <strong>Where teams get caught.</strong> Model performance is usually measured
+            well and documented badly. When an assessor asks which safety function a 0.94
+            mAP discharges, over which part of the task envelope, with what confidence — the
+            number stops being evidence and becomes a slide.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE STANDARDS FAMILY -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8v8H3V3Zm10 0h8v8h-8V3ZM3 13h8v8H3v-8Zm10 0h8v8h-8v-8Z"/></svg>
+        The standards family
+      </p>
+      <h2>Guidance, then specification, then the hard sub-problem</h2>
+      <p class="lede">
+        These three documents are not competitors — they are stages of the same effort,
+        maturing at different speeds. We track all three, and we're honest about which are
+        stable and which are still being written.
+      </p>
+    </div>
+
+    <div class="ladder reveal">
+      <div class="ladder__row">
+        <div class="ladder__id">TR 5469<small>2024 · Technical Report</small></div>
+        <div>
+          <h4>Guidance: naming the risk</h4>
+          <p>
+            Describes the properties of AI systems that matter for functional safety, the
+            risks they introduce, and candidate methods to treat them. Vocabulary and
+            structure rather than mandatory requirements — published and stable, and the
+            document most safety cases cite today.
+          </p>
+        </div>
+      </div>
+      <div class="ladder__row">
+        <div class="ladder__id">TS 22440<small>In development · Technical Specification</small></div>
+        <div>
+          <h4>Specification: normative requirements</h4>
+          <p>
+            A multi-part follow-on built directly on TR&nbsp;5469 — defining safety
+            requirements for AI-enabled systems that adapt over time, and how AI verification
+            and validation integrate into the functional-safety lifecycle. Several parts are
+            still approved work items rather than published text.
+          </p>
+        </div>
+      </div>
+      <div class="ladder__row">
+        <div class="ladder__id">TS 25223<small>In development · Deep-dive specification</small></div>
+        <div>
+          <h4>The hardest sub-problem: uncertainty</h4>
+          <p>
+            Guidance and requirements for uncertainty quantification in AI systems — how a
+            model expresses, calibrates and acts on its own confidence. The difference
+            between a perception stack that fails loudly and one that fails silently and
+            confidently.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIFECYCLE -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 3.5A6.5 6.5 0 0 1 18.5 12H12V5.5Z"/></svg>
+        Lifecycle
+      </p>
+      <h2>The AI safety lifecycle, end to end</h2>
+      <p class="lede">
+        Each stage produces evidence the next one depends on. Skip one and the argument has
+        a hole you will find during certification rather than during development.
+      </p>
+    </div>
+
+    <div class="rail reveal">
+      <div class="rail__row">
+        <p class="rail__k">01 · Allocate</p>
+        <div>
+          <h4>AI safety requirements</h4>
+          <p>
+            Take the safety functions from IEC&nbsp;61508 and any task-level performance
+            needs and turn them into requirements a model can be held to: what must be
+            detected, classified or decided, under which conditions, and what happens when
+            confidence is low.
+          </p>
+        </div>
+      </div>
+      <div class="rail__row">
+        <p class="rail__k">02 · Specify data</p>
+        <div>
+          <h4>Dataset specification &amp; coverage</h4>
+          <p>
+            Derive the required data distribution from the task envelope, not from whatever
+            happens to be sitting in the training log. Define coverage dimensions, minimum
+            representation for rare but safety-critical cases, and acceptance criteria for
+            the dataset itself.
+          </p>
+        </div>
+      </div>
+      <div class="rail__row">
+        <p class="rail__k">03 · Develop</p>
+        <div>
+          <h4>Training &amp; model design under safety control</h4>
+          <p>
+            Reproducible pipelines, controlled splits, versioned data and weights, documented
+            architecture and hyperparameter decisions — the configuration management story
+            that lets you say exactly which model is running on which robot.
+          </p>
+        </div>
+      </div>
+      <div class="rail__row">
+        <p class="rail__k">04 · Evaluate</p>
+        <div>
+          <h4>Performance, robustness &amp; insufficiency analysis</h4>
+          <p>
+            Evaluation stratified by the task and environment dimensions that matter,
+            degradation curves at the edges of the operating envelope, robustness to sensor
+            noise and occlusion, and an explicit list of identified insufficiencies.
+          </p>
+        </div>
+      </div>
+      <div class="rail__row">
+        <p class="rail__k">05 · Contain</p>
+        <div>
+          <h4>Architectural &amp; runtime measures</h4>
+          <p>
+            Uncertainty quantification, out-of-distribution detection, plausibility checks
+            against known physical constraints, diverse redundancy, and the defined safety
+            reaction when confidence collapses.
+          </p>
+        </div>
+      </div>
+      <div class="rail__row">
+        <p class="rail__k">06 · Integrate</p>
+        <div>
+          <h4>Deployment on the target platform</h4>
+          <p>
+            Quantisation, pruning and compilation change the function. Determinism, timing
+            and accelerator fault behaviour bring the component back under IEC&nbsp;61508 —
+            this is where the two branches have to be reconciled, not assumed away.
+          </p>
+        </div>
+      </div>
+      <div class="rail__row">
+        <p class="rail__k">07 · Operate</p>
+        <div>
+          <h4>Monitoring, feedback &amp; model change</h4>
+          <p>
+            In-service performance monitoring, drift detection, incident triage into dataset
+            or architecture changes, and an impact-analysis process for model updates that
+            satisfies both the safety case and any fleet-wide rollout requirements.
+          </p>
+        </div>
+      </div>
+      <div class="rail__row">
+        <p class="rail__k">08 · Argue</p>
+        <div>
+          <h4>The AI safety case</h4>
+          <p>
+            A structured argument from safety function to model evidence, with assumptions,
+            context and an explicit residual risk claim — written so the item-level safety
+            case, and your UL&nbsp;4600 / UL&nbsp;3115 evidence, can reference it directly.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERABLES -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="split">
+      <div class="reveal">
+        <p class="eyebrow eyebrow--lime">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6V2Zm8 1.5V8h4.5L14 3.5ZM8 12h8v1.6H8V12Zm0 4h8v1.6H8V16Z"/></svg>
+          Deliverables
+        </p>
+        <h2>What we deliver</h2>
+        <p class="lede">
+          We work with your ML team in their tooling, not around it. The output is safety
+          evidence that data scientists recognise and certification bodies accept.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="robotics.html#contact">Review your AI evidence</a>
+        </div>
+      </div>
+
+      <ul class="deliver reveal">
+        <li><span>01</span><div><strong>AI safety requirement set.</strong> Traceable from safety functions and task performance needs down to measurable model-level criteria.</div></li>
+        <li><span>02</span><div><strong>Dataset specification &amp; coverage report.</strong> Task-envelope-derived data requirements, gap analysis against your existing corpus, and a prioritised collection or augmentation plan.</div></li>
+        <li><span>03</span><div><strong>ML insufficiency analysis.</strong> Structured identification of failure modes rooted in data, training and generalisation — mapped to real-world triggering conditions.</div></li>
+        <li><span>04</span><div><strong>Evaluation protocol.</strong> Stratified metrics, statistically justified sample sizes, degradation and robustness testing, and a clear statement of what each result proves.</div></li>
+        <li><span>05</span><div><strong>Safety architecture for AI.</strong> Monitoring, OOD detection, plausibility and redundancy concepts with their claimed coverage and their own verification.</div></li>
+        <li><span>06</span><div><strong>Model lifecycle governance.</strong> Versioning, reproducibility, change impact analysis and release criteria for fleet-wide model updates.</div></li>
+        <li><span>07</span><div><strong>AI safety case.</strong> The structured argument, ready to be integrated into the item safety case and your UL evidence.</div></li>
+        <li><span>08</span><div><strong>Standards-landscape mapping.</strong> How your evidence maps onto TR&nbsp;5469 today, and how it positions you for TS&nbsp;22440 and TS&nbsp;25223 as they publish.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNALS -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v5.3l4 2.4-.9 1.5-5.1-3V7h2Z"/></svg>
+        Signals
+      </p>
+      <h2>You probably need this if…</h2>
+    </div>
+    <div class="grid grid-2">
+      <div class="frame reveal">
+        <div class="card">
+          <ul class="checks checks--cyan">
+            <li>Your model metrics are aggregate numbers with no breakdown by task or environment condition.</li>
+            <li>Your training dataset grew organically and has never been specified against the task envelope.</li>
+            <li>Nobody can reproduce the exact model currently running on the fleet from source data.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="frame reveal" data-delay="90">
+        <div class="card">
+          <ul class="checks checks--cyan">
+            <li>The safety architecture assumes the model reports useful confidence, and nobody has verified that it does.</li>
+            <li>Model updates ship without a safety impact analysis, only a regression suite.</li>
+            <li>The functional-safety team and the ML team have never jointly reviewed a single requirement.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECTIONS -->
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--lime">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7h-4V5h4a5 5 0 0 1 0 10h-4v-2h4a3 3 0 0 0 0-6Zm-6 8H7a3 3 0 0 1 0-6h4V7H7a5 5 0 0 0 0 10h4v-2Zm-3-5h8v2H8v-2Z"/></svg>
+        Connections
+      </p>
+      <h2>How this connects to the other two</h2>
+      <p class="lede">
+        This is the newest branch and the one most often run in isolation by a team that
+        doesn't share a vocabulary with the safety organisation. Closing that gap is most of
+        the value.
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+      <a class="frame reveal" href="robotics-service-functional-safety.html">
+        <article class="card">
+          <span class="tag">Upstream</span>
+          <h3 style="margin-top:1.1rem">← IEC 61508 supplies the hazards and the safety functions</h3>
+          <p>
+            The hazard and risk analysis is shared. AI safety should not produce its own
+            hazard list — it should take the existing safety functions and ask what
+            threatens them when the fault assumption is removed. Where an AI safety
+            countermeasure is implemented in E/E/PE hardware or software, that
+            implementation goes straight back into the IEC&nbsp;61508 lifecycle at the right
+            SIL.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore IEC 61508
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+
+      <a class="frame reveal" href="robotics-service-autonomy-certification.html" data-delay="90">
+        <article class="card">
+          <span class="tag tag--lime">Downstream</span>
+          <h3 style="margin-top:1.1rem">→ UL 4600 / 3115 turn the model evidence into a case</h3>
+          <p>
+            AI safety produces the evidence: what was evaluated, on what distribution, with
+            what confidence. UL&nbsp;4600 and UL&nbsp;3115 supply the structure that turns
+            that evidence — alongside your IEC&nbsp;61508 evidence — into an argument a
+            certification body can actually evaluate.
+          </p>
+          <div class="card__foot">
+            <span class="arrow-link">Explore certification
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6L13 5z"/></svg>
+            </span>
+          </div>
+        </article>
+      </a>
+    </div>
+
+    <div class="btn-row reveal" style="justify-content:center">
+      <a class="btn btn--ghost" href="robotics-services.html">See the full hazard ecosystem</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band cut reveal">
+      <h2>Can you defend your model in a certification review?</h2>
+      <p class="lede center">
+        Not "is it accurate" — can you show which safety function each number supports, and
+        what happens on the day it is wrong.
+      </p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--primary" href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a>
+        <a class="btn btn--ghost" href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="index.html">
+          <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+          <span class="logo__text">safe<span>autonomy</span></span>
+        </a>
+        <p class="footer__blurb">
+          Bridging IEC 61508, AI safety and autonomy certification into one defensible safety
+          argument for robotics.
+        </p>
+        <p style="margin-top:1rem"><a href="automotive.html" style="font-family:var(--font-head);font-weight:700;font-size:.85rem;color:var(--muted)">Looking for automotive? →</a></p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="robotics-services.html">Overview</a></li>
+          <li><a href="robotics-service-functional-safety.html">Functional safety</a></li>
+          <li><a href="robotics-service-safe-ai.html">Safe AI</a></li>
+          <li><a href="robotics-service-autonomy-certification.html">Autonomy certification</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="robotics.html#about">About</a></li>
+          <li><a href="robotics-blog.html">Blog</a></li>
+          <li><a href="robotics.html#contact">Contact</a></li>
+          <li><a href="index.html">All industries</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a></li>
+          <li><a href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a></li>
+          <li><a href="https://www.linkedin.com/in/dr-simon-saim-perveen-5b797918a/">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; <span data-year>2026</span> safeautonomy. All rights reserved.</p>
+      <p>IEC 61508 · AI safety · UL 4600 · UL 3115</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

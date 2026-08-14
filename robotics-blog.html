@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog — notes on functional safety, AI safety and certification | safeautonomy robotics</title>
+<meta name="description" content="Practitioner notes on IEC 61508, the emerging AI-safety standards, UL 4600, UL 3115 and the regulation of robotics — written for engineers who have to defend the argument.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2329D3D8' d='M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+  /* topic filter chips — blog only */
+  .chips { display: flex; flex-wrap: wrap; gap: .55rem; margin-bottom: 2.25rem; }
+  .chips button { cursor: pointer; font-family: var(--font-head); transition: all .18s var(--ease); }
+  .chips button:hover { color: var(--white); border-color: var(--line-2); }
+  .chips button.tag--lime:hover { color: var(--lime); }
+
+  .hero--robotics .hero__media::after {
+    background:
+      linear-gradient(90deg, rgba(8,15,22,.9) 0%, rgba(8,15,22,.72) 45%, rgba(8,15,22,.38) 100%),
+      linear-gradient(0deg, var(--bg) 2%, rgba(8,15,22,.2) 45%, rgba(8,15,22,.7) 100%),
+      radial-gradient(ellipse 65% 60% at 78% 30%, rgba(124,107,240,.20), transparent 70%);
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="index.html">
+      <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+      <span class="logo__text">safe<span>autonomy</span></span>
+    </a>
+    <button class="burger" aria-label="Toggle navigation" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+    </button>
+    <nav class="nav" aria-label="Main">
+      <div class="domain-switch" role="group" aria-label="Choose industry">
+        <a href="automotive.html">Automotive</a>
+        <a href="robotics.html" class="is-active">Robotics</a>
+      </div>
+      <a class="nav__link" href="robotics.html" data-nav="robotics.html">Home</a>
+      <div class="nav__item">
+        <a class="nav__link nav__toggle" href="robotics-services.html" data-nav="robotics-services.html robotics-service-functional-safety.html robotics-service-safe-ai.html robotics-service-autonomy-certification.html" aria-expanded="false" aria-haspopup="true">
+          Services <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 4l5 5 5-5z"/></svg>
+        </a>
+        <div class="nav__menu">
+          <a href="robotics-services.html">Services overview<small>How the standards form one hazard ecosystem</small></a>
+          <a href="robotics-service-functional-safety.html">Functional safety<small>IEC 61508 for E/E/PE safety-related systems</small></a>
+          <a href="robotics-service-safe-ai.html">Safe AI<small>ISO/IEC TR 5469 · TS 22440 · TS 25223</small></a>
+          <a href="robotics-service-autonomy-certification.html">Autonomy certification<small>UL 4600 · UL 3115</small></a>
+        </div>
+      </div>
+      <a class="nav__link" href="robotics-blog.html" data-nav="robotics-blog.html">Blog</a>
+      <a class="nav__link" href="robotics.html#about">About</a>
+      <div class="nav__cta"><a class="btn btn--primary" href="robotics.html#contact">Talk to us</a></div>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero hero--page hero--robotics">
+  <div class="hero__media">
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+      <source src="assets/video/robotics-hero.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="arcs arcs--br" aria-hidden="true"></div>
+  <div class="container hero__inner">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="robotics.html">Home</a> <span>/</span> <span>Blog</span>
+    </nav>
+    <p class="eyebrow">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h11l3 3v15H5V3Zm3 6h9v1.8H8V9Zm0 4h9v1.8H8V13Zm0 4h6v1.8H8V17Z"/></svg>
+      Blog
+    </p>
+    <h1>Notes from the seams</h1>
+    <p class="hero__sub">
+      Practitioner writing on functional safety, AI safety, autonomy certification and the
+      regulation that ties them together. No standard summaries — the parts that are
+      actually contested.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <div class="chips reveal" role="group" aria-label="Filter posts by topic">
+      <button class="tag tag--lime" data-filter="all" aria-pressed="true">All posts</button>
+      <button class="tag tag--plain" data-filter="functional-safety" aria-pressed="false">Functional safety</button>
+      <button class="tag tag--plain" data-filter="ai-safety" aria-pressed="false">AI safety</button>
+      <button class="tag tag--plain" data-filter="certification" aria-pressed="false">Certification</button>
+      <button class="tag tag--plain" data-filter="regulation" aria-pressed="false">Regulation</button>
+      <button class="tag tag--plain" data-filter="practice" aria-pressed="false">Practice</button>
+    </div>
+
+    <!-- ================= POST 1 (featured) ================= -->
+    <details class="post post--feature reveal" data-topics="functional-safety practice" open>
+        <summary>
+          <div class="post__meta">
+            <span class="tag tag--lime">Featured</span>
+            <time datetime="2026-08-04">4 August 2026</time>
+            <span>·</span><span>8 min read</span>
+            <span>·</span><span>Functional safety</span>
+          </div>
+          <h3>"Possibility of avoidance" was written for a person who can see it coming</h3>
+          <p class="post__excerpt">
+            One parameter in the IEC 61508 risk graph carries more unexamined optimism than
+            any other. Autonomous and collaborative robots are exactly where that optimism
+            stops being justified.
+          </p>
+          <span class="post__more">Read the article
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9 1 3h10z"/></svg>
+          </span>
+        </summary>
+
+        <div class="post__body prose">
+          <p>
+            The risk graph method behind SIL determination rests on four parameters:
+            consequence severity, frequency and duration of exposure, probability of the
+            unwanted event, and <strong>possibility of avoidance</strong> — whether someone in
+            the danger zone can realistically get out of the way once something starts to go
+            wrong. Of the four, avoidance is the one that quietly does the most work, and the
+            one whose assumptions age worst.
+          </p>
+
+          <h3>The inherited assumption</h3>
+          <p>
+            The parameter was written for fixed guarded machinery: an operator standing at a
+            known station, facing a machine whose motion envelope is fixed and familiar,
+            able to see a fault developing and step back before it matters. In that setting
+            "possible" is a defensible answer, and it has been rated that way in classification
+            after classification for decades.
+          </p>
+          <p>
+            Move the same reasoning to a collaborative arm that only occasionally reaches
+            outside its usual envelope, or a mobile robot approaching from a blind corner in a
+            shared aisle, and the assumption underneath "possible" quietly stops holding. The
+            person is not facing a known machine at a known station. They may not know the
+            robot is there at all until it is close enough that avoidance is no longer
+            realistic.
+          </p>
+
+          <h3>Where the optimism hides</h3>
+          <p>
+            We see three recurring patterns when we re-examine an existing avoidance rating:
+          </p>
+          <ul>
+            <li>The rating was set when the robot operated in a fenced cell, and never revisited when the cell was removed for a collaborative retrofit.</li>
+            <li>The rating assumes a warning signal — a light, a sound, a floor projection — whose own reliability was never analysed as a safety function in its own right.</li>
+            <li>The rating assumes a reaction time drawn from a standing, attentive adult, applied to a workforce that includes people walking, carrying loads, or wearing hearing protection.</li>
+          </ul>
+
+          <h3>What a valid re-assessment looks like</h3>
+          <p>
+            State the assumed context explicitly for every avoidance rating: is the person
+            expected to be facing the hazard, aware the robot operates autonomously, and free
+            to move? If the warning strategy is load-bearing, does the warning path itself
+            have the safety integrity the rating depends on — because if the warning fails
+            silently, the avoidance claim fails with it? And for any robot whose task envelope
+            has changed since the rating was set, treat that as an item-definition change that
+            triggers a new hazard and risk analysis, not a footnote.
+          </p>
+
+          <div class="callout">
+            <p>
+              <strong>The uncomfortable outcome.</strong> Done honestly, this exercise tends to
+              move a handful of safety functions up a SIL. That is expensive, and it is also
+              the point — the alternative is a safety case whose foundation contains an
+              assumption the deployment environment already contradicts.
+            </p>
+          </div>
+        </div>
+    </details>
+
+    <!-- ================= POST 2 ================= -->
+    <details class="post reveal" data-topics="ai-safety functional-safety">
+        <summary>
+          <div class="post__meta">
+            <time datetime="2026-07-21">21 July 2026</time>
+            <span>·</span><span>7 min read</span>
+            <span>·</span><span>AI safety</span>
+          </div>
+          <h3>Your model's confidence number is not evidence</h3>
+          <p class="post__excerpt">
+            A softmax score or a detector's confidence output looks like epistemic humility.
+            Usually it is neither calibrated nor validated as the decision boundary it is
+            being used as.
+          </p>
+          <span class="post__more">Read the article
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9 1 3h10z"/></svg>
+          </span>
+        </summary>
+
+        <div class="post__body prose">
+          <p>
+            Almost every perception or grasp-planning model in production reports a
+            confidence value alongside its output. Almost every safety architecture built
+            around that model treats low confidence as the trigger for a fallback behaviour.
+            The step nobody checks is whether the number means what the architecture assumes
+            it means.
+          </p>
+
+          <h3>Why the number is usually wrong in a specific way</h3>
+          <p>
+            Modern classifiers are frequently <strong>overconfident exactly where it matters
+            most</strong> — on inputs that sit outside the training distribution. A network
+            rarely outputs "I don't know." It outputs a class and a high score, because
+            nothing in standard training ever taught it to recognise novelty. This is precisely
+            the failure mode ISO/IEC&nbsp;TS&nbsp;25223 is being written to address: not
+            whether the model is accurate, but whether its stated uncertainty is
+            <em>calibrated</em> — whether a 90% confidence score is actually right 90% of the
+            time, including on the inputs the model has never met.
+          </p>
+
+          <h3>Four questions before a confidence threshold becomes a safety function</h3>
+          <p>
+            <strong>Was calibration measured, not assumed?</strong> Expected calibration error
+            or an equivalent metric, on a held-out set that includes near-distribution and
+            out-of-distribution examples — not just the validation split from the same
+            collection campaign as training.
+          </p>
+          <p>
+            <strong>Does the threshold hold under distribution shift?</strong> A threshold
+            tuned on indoor lighting rarely survives a change in camera, a new SKU, or a
+            different floor surface. If the threshold moves, the safety function built on it
+            moves with it — silently.
+          </p>
+          <p>
+            <strong>Is the failure asymmetry represented?</strong> A missed grasp and a
+            dropped, misidentified, or crushed object are not equivalent errors. The
+            confidence threshold that minimises overall error is rarely the threshold that
+            minimises harm.
+          </p>
+          <p>
+            <strong>What happens below threshold?</strong> "Fall back to a safe state" is not
+            a specification until the safe state, the transition time, and the behaviour if
+            the robot is mid-task are all defined and themselves verified.
+          </p>
+
+          <div class="callout callout--cyan">
+            <p>
+              <strong>The reframe.</strong> Stop asking "how confident is the model" and start
+              asking "has this confidence value been shown to correlate with correctness, on
+              the distribution we actually operate in, at the threshold we actually use."
+              That question is what a calibrated-uncertainty argument has to answer — and it
+              is usually the first thing missing from an AI safety case that otherwise looks
+              complete.
+            </p>
+          </div>
+        </div>
+    </details>
+
+    <!-- ================= POST 3 ================= -->
+    <details class="post reveal" data-topics="regulation practice">
+        <summary>
+          <div class="post__meta">
+            <time datetime="2026-07-02">2 July 2026</time>
+            <span>·</span><span>7 min read</span>
+            <span>·</span><span>Regulation</span>
+          </div>
+          <h3>The EU Machinery Regulation just widened to cover your robot</h3>
+          <p class="post__excerpt">
+            (EU) 2023/1230 applies from January 2027 and explicitly names autonomous mobile
+            machinery, AI-based safety systems, and industrial and collaborative robots.
+            Teams still reading it as a formality are underestimating it.
+          </p>
+          <span class="post__more">Read the article
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9 1 3h10z"/></svg>
+          </span>
+        </summary>
+
+        <div class="post__body prose">
+          <p>
+            The Machinery Regulation replaces the old Machinery Directive, and the headline
+            change is not procedural — it is scope. Where the Directive's software provisions
+            were written for an era of fixed control logic, the Regulation names categories
+            that did not meaningfully exist when it was drafted the first time around:
+            autonomous mobile machinery, AI-based safety systems, and industrial robots and
+            cobots, alongside machinery with remote-operation features and connected,
+            software-defined equipment.
+          </p>
+
+          <h3>Why "we already do functional safety" is not the same as ready</h3>
+          <p>
+            A robot manufacturer with a solid IEC&nbsp;61508 programme can still find itself
+            outside conformity, because the Regulation is not only asking whether the hardware
+            fails safely. It is asking questions the classic functional-safety lifecycle was
+            never built to answer on its own: what happens when a safety-relevant function is
+            implemented in AI, what evidence supports that function's trustworthiness, and how
+            changes to that function after the machine is placed on the market are governed.
+          </p>
+          <p>
+            This is exactly the seam our AI-safety and certification practices exist to close
+            — the Regulation does not care whether your evidence lives in three different
+            teams' folders, only whether it adds up to a coherent conformity argument.
+          </p>
+
+          <h3>2027 is not as far away as it looks</h3>
+          <p>
+            Robotics hardware and safety architecture decisions have long lead times.
+            A conformity gap discovered during a 2026 design freeze is a very different
+            problem than one discovered in a 2025 concept review. The practical advice is the
+            same one we give on every regulatory deadline: read the annex now, map your
+            current architecture and evidence against the named categories, and treat any gap
+            as an architecture decision, not a documentation task to close later.
+          </p>
+
+          <div class="callout">
+            <p>
+              <strong>What we're watching.</strong> How national market surveillance
+              authorities interpret "AI-based safety system" in practice will matter as much
+              as the text itself. We track the guidance as it lands and adjust client
+              conformity strategies accordingly — this is a live regulatory question, not a
+              settled one.
+            </p>
+          </div>
+        </div>
+    </details>
+
+    <!-- ================= POST 4 ================= -->
+    <details class="post reveal" data-topics="certification practice">
+        <summary>
+          <div class="post__meta">
+            <time datetime="2026-06-16">16 June 2026</time>
+            <span>·</span><span>6 min read</span>
+            <span>·</span><span>Certification</span>
+          </div>
+          <h3>A safety case is not a compliance folder</h3>
+          <p class="post__excerpt">
+            Teams with genuinely careful engineering still fail customer due diligence,
+            because the evidence was never organised into claims anyone outside the
+            engineering team can evaluate.
+          </p>
+          <span class="post__more">Read the article
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9 1 3h10z"/></svg>
+          </span>
+        </summary>
+
+        <div class="post__body prose">
+          <p>
+            We are regularly shown a shared drive full of test reports, review minutes and
+            component datasheets and told "the safety case is all in there." It usually isn't
+            — not because the engineering is weak, but because a folder of evidence is not the
+            same thing as an argument. UL&nbsp;4600's structure — claim, argument, evidence —
+            exists precisely because that difference is where certification reviews stall.
+          </p>
+
+          <h3>The three parts, and where each one breaks</h3>
+          <p>
+            A <strong>claim</strong> is a specific, falsifiable statement: "the robot will not
+            exceed 15&nbsp;N of contact force during unexpected human contact in collaborative
+            mode." Claims break when they are vague enough that no evidence could ever
+            contradict them.
+          </p>
+          <p>
+            The <strong>argument</strong> is the reasoning that connects evidence to the
+            claim: why these tests, this analysis, and this operational history are sufficient
+            to support it. Arguments break silently — a document simply asserts the claim is
+            "demonstrated by testing" without saying which testing, under what conditions, or
+            why that testing generalises to the claimed scope.
+          </p>
+          <p>
+            The <strong>evidence</strong> is the test report, the analysis, the field data.
+            Evidence breaks when it quietly supports a narrower claim than the one it's cited
+            against — a force measurement taken at one joint configuration, cited in support
+            of a claim about the whole workspace.
+          </p>
+
+          <h3>A test you can run on your own case today</h3>
+          <p>
+            Pick any claim in your safety documentation. Ask: if I deleted the evidence behind
+            it, would a reader who has never met your team notice that the claim is now
+            unsupported? If the honest answer is "probably not, because the evidence and the
+            claim aren't explicitly linked," that is the gap a UL&nbsp;4600-structured case is
+            built to close.
+          </p>
+
+          <div class="callout callout--cyan">
+            <p>
+              <strong>Start the structure early.</strong> A safety case retrofitted onto
+              finished engineering is always weaker than one that shaped what evidence got
+              collected in the first place. Claims written during architecture review tell you
+              what to test; claims written during submission tell you what you forgot to.
+            </p>
+          </div>
+        </div>
+    </details>
+
+    <!-- ================= POST 5 ================= -->
+    <details class="post reveal" data-topics="ai-safety regulation">
+        <summary>
+          <div class="post__meta">
+            <time datetime="2026-05-27">27 May 2026</time>
+            <span>·</span><span>7 min read</span>
+            <span>·</span><span>AI safety · Regulation</span>
+          </div>
+          <h3>Building evidence for standards that aren't published yet</h3>
+          <p class="post__excerpt">
+            ISO/IEC TS 22440 and TS 25223 are still approved work items, not finished text.
+            Waiting for the final wording is the expensive option, not the cautious one.
+          </p>
+          <span class="post__more">Read the article
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9 1 3h10z"/></svg>
+          </span>
+        </summary>
+
+        <div class="post__body prose">
+          <p>
+            It's a reasonable instinct to wait for a standard to be finished before building a
+            programme around it — clause numbers change, scope shifts, an early guess can look
+            foolish in hindsight. For TS&nbsp;22440 and TS&nbsp;25223, both still in
+            development, we advise against waiting anyway.
+          </p>
+
+          <h3>The questions don't move even when the clause numbers do</h3>
+          <p>
+            ISO/IEC&nbsp;TR&nbsp;5469, published and stable since 2024, already describes the
+            engineering questions the later specifications will formalise: what safety
+            requirements look like for a system whose behaviour is learned rather than
+            written, how AI verification integrates into a functional-safety lifecycle, and
+            how a system's confidence in its own output should be treated as a safety
+            property. Those questions do not change while the specification text is being
+            drafted — only the precise, citable requirement wording does.
+          </p>
+          <p>
+            Teams that build their AI safety case around TR&nbsp;5469's structure now are not
+            gambling on a moving target. They are doing the engineering work the eventual
+            specification will ask for anyway, and positioning themselves to map existing
+            evidence onto new clause numbers when they publish — instead of starting the
+            underlying analysis from a standing start under a submission deadline.
+          </p>
+
+          <h3>The precedent from SOTIF</h3>
+          <p>
+            We watched the same pattern play out with ISO&nbsp;21448 in automotive: teams that
+            structured their validation around the underlying scenario-space reasoning years
+            before the standard reached its current published form adapted fastest once
+            consensus formed. Teams that waited spent their first eighteen months translating
+            existing but unstructured work into the standard's vocabulary, instead of
+            producing new evidence.
+          </p>
+
+          <div class="callout">
+            <p>
+              <strong>What this looks like in practice.</strong> Structure your dataset
+              specification, model evaluation and uncertainty-calibration evidence against the
+              questions TR&nbsp;5469 already poses, with clear traceability so each piece can
+              be relabelled rather than rebuilt. When TS&nbsp;22440 and TS&nbsp;25223 publish,
+              that traceability is the difference between a mapping exercise and a rewrite.
+            </p>
+          </div>
+        </div>
+    </details>
+
+    <!-- ================= POST 6 ================= -->
+    <details class="post reveal" data-topics="ai-safety functional-safety">
+        <summary>
+          <div class="post__meta">
+            <time datetime="2026-05-08">8 May 2026</time>
+            <span>·</span><span>6 min read</span>
+            <span>·</span><span>AI safety · Functional safety</span>
+          </div>
+          <h3>The forgotten interface: where your model meets the actuator</h3>
+          <p class="post__excerpt">
+            ML teams evaluate the model. Safety teams analyse the hardware. Between them sits
+            the control interface that turns a model's output into a physical motion, and it
+            belongs to nobody.
+          </p>
+          <span class="post__more">Read the article
+            <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 9 1 3h10z"/></svg>
+          </span>
+        </summary>
+
+        <div class="post__body prose">
+          <p>
+            The model that was evaluated is rarely the exact function that commands the
+            motors. Between the two sit quantisation, a vendor inference runtime, a motion
+            planner that translates a grasp pose into joint trajectories, and a motor
+            controller with its own timing and fault behaviour. Each of these changes the
+            function. Most of them are treated as a build step rather than a safety-relevant
+            transformation.
+          </p>
+
+          <h3>Three questions that usually have no owner</h3>
+          <p>
+            <strong>What did quantisation cost you, and where?</strong> Compressing a model
+            for an embedded accelerator typically costs a small amount of aggregate accuracy.
+            That aggregate hides the distribution: the loss concentrates in low-confidence,
+            rare, or novel-object cases — the same cases most likely to matter for a safety
+            claim. If the deployed model was not re-evaluated on the stratified protocol, the
+            safety evidence describes a different function than the one running on the robot.
+          </p>
+          <p>
+            <strong>Is the inference and motion toolchain qualified?</strong> A compiler or
+            motion planner that transforms a safety-relevant function is a software tool in
+            the IEC&nbsp;61508 sense, with a tool confidence level and potentially a
+            qualification requirement. Vendor toolchains for ML accelerators and modern
+            motion stacks are frequently newer and less transparent than the tooling an
+            organisation qualified carefully for its classic control loops.
+          </p>
+          <p>
+            <strong>What happens when the actuator executes a corrupted command?</strong> A
+            plausible-looking but wrong model output, combined with a random hardware fault in
+            the motion pipeline, does not announce itself. The model's own sensitivity to
+            corrupted computation is an input to the dependent failure analysis — and it is
+            usually missing from both the ML evaluation and the classic FMEDA.
+          </p>
+
+          <h3>How to close it</h3>
+          <ul>
+            <li>Treat the deployed, on-target artefact as the item under evaluation — not a workstation build with a different numerical path.</li>
+            <li>Classify the inference and motion toolchain formally, and qualify it or argue the confidence level down with your own verification evidence.</li>
+            <li>Include the actuation pipeline in the dependent failure analysis, with the model treated as a component whose behaviour under corrupted computation has been characterised.</li>
+            <li>Make timing and determinism explicit requirements — a motion pipeline that occasionally exceeds its control-loop budget under load is a functional safety finding, whatever its accuracy.</li>
+          </ul>
+
+          <div class="callout">
+            <p>
+              <strong>Organisationally.</strong> This interface needs one named owner
+              comfortable in both vocabularies. Where it has none, the gap is not usually
+              discovered in review — it is discovered by a certification body asking one very
+              simple question about which model, on which hardware, actually commands the
+              robot.
+            </p>
+          </div>
+        </div>
+    </details>
+
+    <p class="reveal" style="color:var(--muted-2);font-size:.9rem;margin-top:2rem">
+      More articles are published roughly monthly. For notification, reach out on
+      <a href="https://www.linkedin.com/in/dr-simon-saim-perveen-5b797918a/">LinkedIn</a>.
+    </p>
+
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta-band cut reveal">
+      <h2>Have a question these posts don't answer?</h2>
+      <p class="lede center">
+        Most of what is written here started as a client question. Yours is welcome too.
+      </p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--primary" href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a>
+        <a class="btn btn--ghost" href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="index.html">
+          <svg class="logo__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3.5 5.6v6.1c0 5.2 3.6 9 8.5 10.3 4.9-1.3 8.5-5.1 8.5-10.3V5.6L12 2Zm0 2.2 6.5 2.7v4.8c0 4-2.6 7-6.5 8.2-3.9-1.2-6.5-4.2-6.5-8.2V6.9L12 4.2Z"/><path d="m10.9 14.4-2.6-2.6 1.3-1.3 1.3 1.3 3.5-3.5 1.3 1.3-4.8 4.8Z"/></svg>
+          <span class="logo__text">safe<span>autonomy</span></span>
+        </a>
+        <p class="footer__blurb">
+          Bridging IEC 61508, AI safety and autonomy certification into one defensible safety
+          argument for robotics.
+        </p>
+        <p style="margin-top:1rem"><a href="blog.html" style="font-family:var(--font-head);font-weight:700;font-size:.85rem;color:var(--muted)">Looking for automotive? →</a></p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="robotics-services.html">Overview</a></li>
+          <li><a href="robotics-service-functional-safety.html">Functional safety</a></li>
+          <li><a href="robotics-service-safe-ai.html">Safe AI</a></li>
+          <li><a href="robotics-service-autonomy-certification.html">Autonomy certification</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="robotics.html#about">About</a></li>
+          <li><a href="robotics-blog.html">Blog</a></li>
+          <li><a href="robotics.html#contact">Contact</a></li>
+          <li><a href="index.html">All industries</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/352661553282">WhatsApp +352 661 553 282</a></li>
+          <li><a href="mailto:contact@safeautonomy.eu">contact@safeautonomy.eu</a></li>
+          <li><a href="https://www.linkedin.com/in/dr-simon-saim-perveen-5b797918a/">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; <span data-year>2026</span> safeautonomy. All rights reserved.</p>
+      <p>IEC 61508 · AI safety · UL 4600 · UL 3115</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
