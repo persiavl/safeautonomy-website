@@ -999,15 +999,25 @@ a.contact-card__v:hover { color: var(--lime); }
 .split-hero__content h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); margin-bottom: .7rem; }
 .split-hero__content p { color: var(--text); max-width: 34ch; margin-bottom: 1.6rem; }
 .split-hero__enter {
+  --notch: 11px;
   display: inline-flex;
   align-items: center;
   gap: .55rem;
+  padding: .82rem 1.5rem;
   font-family: var(--font-head);
   font-weight: 700;
   font-size: .92rem;
-  color: var(--white);
+  color: #0A1017;
+  background: var(--lime);
+  clip-path: polygon(
+    var(--notch) 0, 100% 0,
+    100% calc(100% - var(--notch)), calc(100% - var(--notch)) 100%,
+    0 100%, 0 var(--notch)
+  );
+  transition: background .2s var(--ease), transform .2s var(--ease);
 }
 .split-hero__enter svg { width: 15px; height: 15px; fill: currentColor; transition: transform .25s var(--ease); }
+.split-hero__panel:hover .split-hero__enter { background: #E4FB55; transform: translateY(-2px); }
 .split-hero__panel:hover .split-hero__enter svg { transform: translateX(5px); }
 
 .split-hero__seam {
