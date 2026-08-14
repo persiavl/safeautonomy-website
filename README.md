@@ -43,7 +43,7 @@ background.
 1. **Portrait.** Save your photo as `assets/img/saim.jpg`, then in `index.html`
    (About section) delete the placeholder `<div class="founder__photo">…</div>`
    and uncomment the `<img>` line directly above it.
-2. **Email.** `contact@safeautonomy.eu` appears on every page. Find-and-replace
+2. **Email.** `info@safeautonomy.ai` appears on every page. Find-and-replace
    it with your real address.
 3. **LinkedIn.** The footer links to `https://www.linkedin.com/` — replace with
    your profile URL (also appears at the end of `blog.html`).
