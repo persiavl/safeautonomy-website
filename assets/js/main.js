@@ -84,11 +84,21 @@
     Array.prototype.forEach.call(targets, function (el) { io.observe(el); });
   }
 
+  /* ---- responsive hero video: swap to a lighter file on small screens ---- */
+  var isSmallScreen = window.matchMedia('(max-width: 700px)').matches;
+  Array.prototype.forEach.call(document.querySelectorAll('video[data-mobile-src]'), function (v) {
+    if (isSmallScreen && !reduceMotion) {
+      v.setAttribute('src', v.getAttribute('data-mobile-src'));
+      v.load();
+    }
+  });
+
   /* ---- hero video: don't autoplay when motion is reduced ---- */
-  var video = document.querySelector('.hero__video');
-  if (video && reduceMotion) {
-    video.removeAttribute('autoplay');
-    video.pause();
+  if (reduceMotion) {
+    Array.prototype.forEach.call(document.querySelectorAll('.hero__video, .split-hero__media video'), function (v) {
+      v.removeAttribute('autoplay');
+      v.pause();
+    });
   }
 
   /* ---- current year ---- */

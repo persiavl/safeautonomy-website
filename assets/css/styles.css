@@ -1148,9 +1148,7 @@ a.contact-card__v:hover { color: var(--lime); }
 @media (max-width: 700px) {
   body { font-size: 16px; }
   .container { width: min(100% - 2rem, var(--maxw)); }
-  /* skip the 27 MB download on phones — gradient stands in */
-  .hero__video { display: none; }
-  .hero__media { background: radial-gradient(ellipse 100% 70% at 70% 30%, #14303C, var(--bg) 70%); }
+  .hero__media { background: var(--bg); }
   .grid-2, .grid-4 { grid-template-columns: 1fr; }
   .footer__grid { grid-template-columns: 1fr; }
   .card { padding: 1.6rem 1.4rem; }
@@ -1160,9 +1158,7 @@ a.contact-card__v:hover { color: var(--lime); }
   .hero--page { min-height: auto; padding: 7.5rem 0 3rem; }
 
   .split-hero__panel { min-height: 62svh; padding: 1.5rem; }
-  .split-hero__media video { display: none; }
-  .split-hero__panel--automotive .split-hero__media { background: radial-gradient(ellipse 100% 70% at 70% 30%, #14303C, var(--bg) 70%); }
-  .split-hero__panel--robotics .split-hero__media { background: radial-gradient(ellipse 100% 70% at 30% 30%, #241C40, var(--bg) 70%); }
+  .split-hero__media { background: var(--bg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
