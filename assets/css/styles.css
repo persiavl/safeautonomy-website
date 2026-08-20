@@ -859,6 +859,22 @@ a.contact-card__v:hover { color: var(--lime); }
 .location-card__body h4 { margin-bottom: .35rem; font-size: 1.08rem; }
 .location-card__body p { color: var(--muted); font-size: .92rem; margin: 0; }
 
+.location-card__map--globe {
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(ellipse 70% 70% at 50% 40%, rgba(41,211,216,.16), transparent 70%),
+    var(--bg-2);
+}
+.location-card__map--globe svg {
+  width: 30%;
+  height: auto;
+  aspect-ratio: 1;
+  fill: none;
+  stroke: var(--cyan);
+  stroke-width: 1.1;
+}
+
 /* ---------- 18. Footer ---------- */
 .footer {
   border-top: 1px solid var(--line);
